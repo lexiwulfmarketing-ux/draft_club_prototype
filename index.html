@@ -1,0 +1,3055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draft Club — Wireframes</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F0EAE0;
+    --cream-dark: #E5DDD2;
+    --espresso: #2D1A12;
+    --espresso-60: rgba(45,26,18,0.6);
+    --espresso-20: rgba(45,26,18,0.12);
+    --espresso-10: rgba(45,26,18,0.07);
+    --orange: #C94320;
+    --olive: #9B9B24;
+    --blue: #6B8DB5;
+    --white: #FDFAF6;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 20px;
+    --radius-pill: 999px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: #1a1a1a; color: var(--espresso); }
+
+  /* ── SCREEN SWITCHER ── */
+  .screen-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: #111; padding: 10px 20px;
+    display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  }
+  .screen-nav span { color: #666; font-size: 11px; font-family: 'DM Sans', sans-serif; margin-right: 4px; }
+  .screen-btn {
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500;
+    padding: 4px 10px; border-radius: 20px; border: 1px solid #333;
+    background: #222; color: #999; cursor: pointer; transition: all 0.15s;
+  }
+  .screen-btn:hover { background: #333; color: #ccc; }
+  .screen-btn.active { background: var(--orange); color: white; border-color: var(--orange); }
+
+  /* ── APP SHELL ── */
+  .app-wrapper {
+    margin-top: 50px; display: none;
+    background: var(--cream); min-height: calc(100vh - 50px);
+    max-width: 1280px; margin-left: auto; margin-right: auto;
+    margin-top: 50px;
+  }
+  .app-wrapper.visible { display: flex; }
+
+  /* ── SIDEBAR NAV ── */
+  .sidebar {
+    width: 220px; min-height: calc(100vh - 50px);
+    background: var(--espresso); padding: 28px 0;
+    display: flex; flex-direction: column;
+    flex-shrink: 0; position: sticky; top: 50px; height: calc(100vh - 50px);
+  }
+  .sidebar-logo {
+    padding: 0 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 16px;
+  }
+  .logo-mark {
+    width: 36px; height: 24px; background: var(--cream); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; gap: 3px;
+    margin-bottom: 8px;
+  }
+  .logo-mark span {
+    width: 5px; height: 5px; background: var(--espresso); border-radius: 50%;
+    display: block;
+  }
+  .logo-text { color: var(--cream); font-size: 15px; font-weight: 700; letter-spacing: -0.3px; }
+  .nav-section-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    color: rgba(240,234,224,0.35); text-transform: uppercase;
+    padding: 0 20px; margin: 8px 0 4px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px; cursor: pointer; transition: background 0.1s;
+    color: rgba(240,234,224,0.65); font-size: 13.5px; font-weight: 500;
+    border-radius: 0;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.06); color: var(--cream); }
+  .nav-item.active { background: rgba(201,67,32,0.18); color: var(--cream); border-right: 2px solid var(--orange); }
+  .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
+  /* ── SIDEBAR SOCIAL BAR ── */
+  .sidebar-socials {
+    padding: 12px 20px 14px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .sidebar-socials-label {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(240,234,224,0.3);
+    margin-bottom: 8px;
+  }
+  .social-icons { display: flex; gap: 6px; flex-wrap: wrap; }
+  .social-icon {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; cursor: pointer; transition: background 0.15s;
+    text-decoration: none;
+  }
+  .social-icon:hover { background: rgba(255,255,255,0.14); }
+
+  .sidebar-bottom {
+    padding: 14px 20px 18px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .member-chip {
+    background: rgba(201,67,32,0.2); color: var(--orange);
+    font-size: 10px; font-weight: 600; letter-spacing: 0.05em;
+    padding: 3px 8px; border-radius: var(--radius-pill); display: inline-block;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .avatar-row { display: flex; align-items: center; gap: 8px; }
+  .avatar-sm {
+    width: 30px; height: 30px; border-radius: 50%; background: var(--olive);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: white; flex-shrink: 0;
+  }
+  .avatar-name { font-size: 12px; font-weight: 500; color: rgba(240,234,224,0.8); }
+  .avatar-role { font-size: 10px; color: rgba(240,234,224,0.4); }
+
+  /* ── MAIN CONTENT ── */
+  .main { flex: 1; overflow-y: auto; }
+  .page { display: none; padding: 36px 40px; min-height: calc(100vh - 50px); }
+  .page.visible { display: block; }
+
+  /* ── ANNOTATION CHIP ── */
+  .ann {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(107,141,181,0.15); color: var(--blue);
+    border: 1px dashed var(--blue); border-radius: 4px;
+    font-size: 10px; font-weight: 600; padding: 2px 7px;
+    letter-spacing: 0.04em; vertical-align: middle; margin-left: 6px;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .page-title { font-size: 26px; font-weight: 700; color: var(--espresso); margin-bottom: 4px; }
+  .page-sub { font-size: 14px; color: var(--espresso-60); margin-bottom: 28px; }
+  h3 { font-size: 16px; font-weight: 700; color: var(--espresso); margin-bottom: 12px; }
+  h4 { font-size: 13px; font-weight: 600; color: var(--espresso); }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 20px; border: 1px solid var(--espresso-20);
+  }
+  .card-grid { display: grid; gap: 16px; }
+  .card-grid-2 { grid-template-columns: 1fr 1fr; }
+  .card-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .card-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+  /* ── CHIPS & BADGES ── */
+  .tag {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 3px 10px; border-radius: var(--radius-pill);
+    background: var(--espresso-10); color: var(--espresso);
+  }
+  .tag-orange { background: rgba(201,67,32,0.12); color: var(--orange); }
+  .tag-olive { background: rgba(155,155,36,0.15); color: #6b6b0d; }
+  .tag-blue { background: rgba(107,141,181,0.15); color: #3d6494; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    padding: 9px 18px; border-radius: var(--radius-pill); cursor: pointer;
+    border: none; transition: all 0.15s;
+  }
+  .btn-primary { background: var(--espresso); color: var(--cream); }
+  .btn-primary:hover { background: #1a0e08; }
+  .btn-orange { background: var(--orange); color: white; }
+  .btn-outline {
+    background: transparent; color: var(--espresso);
+    border: 1.5px solid var(--espresso-20);
+  }
+  .btn-sm { padding: 6px 14px; font-size: 12px; }
+
+  /* ── DIVIDERS ── */
+  .divider { border: none; border-top: 1px solid var(--espresso-20); margin: 24px 0; }
+
+  /* ── INPUT ── */
+  .input-field {
+    width: 100%; font-family: 'DM Sans', sans-serif; font-size: 14px;
+    padding: 10px 14px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--espresso-20); background: var(--white);
+    color: var(--espresso); outline: none;
+  }
+  .input-field:focus { border-color: var(--espresso); }
+  .input-label { font-size: 12px; font-weight: 600; color: var(--espresso); margin-bottom: 5px; display: block; }
+
+  /* ─────────────────────────────────────── */
+  /*  PAGE: HOME                             */
+  /* ─────────────────────────────────────── */
+  .home-welcome {
+    background: var(--espresso); border-radius: var(--radius-lg);
+    padding: 28px 32px; margin-bottom: 28px; position: relative; overflow: hidden;
+  }
+  .home-welcome::before {
+    content: ''; position: absolute; right: -20px; top: -30px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(201,67,32,0.15); pointer-events: none;
+  }
+  .home-welcome::after {
+    content: ''; position: absolute; right: 60px; top: 20px;
+    width: 100px; height: 100px; border-radius: 50%;
+    background: rgba(155,155,36,0.1); pointer-events: none;
+  }
+  .welcome-greeting { font-size: 22px; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
+  .welcome-sub { font-size: 14px; color: rgba(240,234,224,0.6); margin-bottom: 20px; }
+  .welcome-stats { display: flex; gap: 24px; }
+  .stat-item { }
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--cream); }
+  .stat-label { font-size: 11px; color: rgba(240,234,224,0.5); font-weight: 500; }
+
+  .home-grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
+  .home-left { display: flex; flex-direction: column; gap: 20px; }
+  .home-right { display: flex; flex-direction: column; gap: 20px; }
+
+  .activity-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 0; border-bottom: 1px solid var(--espresso-10);
+  }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-avatar {
+    width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: white;
+  }
+  .activity-text { font-size: 13px; color: var(--espresso-60); line-height: 1.5; }
+  .activity-text strong { color: var(--espresso); font-weight: 600; }
+  .activity-time { font-size: 11px; color: var(--espresso-60); margin-top: 3px; }
+
+  .featured-card {
+    background: var(--orange); border-radius: var(--radius-lg);
+    padding: 24px; color: white; position: relative; overflow: hidden;
+  }
+  .featured-card::before {
+    content: ''; position: absolute; bottom: -20px; right: -20px;
+    width: 140px; height: 140px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+  .featured-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; margin-bottom: 8px; }
+  .featured-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .featured-sub { font-size: 13px; opacity: 0.75; margin-bottom: 16px; }
+
+  .event-item {
+    display: flex; gap: 14px; align-items: center;
+    padding: 12px 0; border-bottom: 1px solid var(--espresso-10);
+  }
+  .event-item:last-child { border-bottom: none; }
+  .event-date-block {
+    width: 42px; height: 42px; background: var(--espresso-10); border-radius: var(--radius-sm);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .event-date-month { font-size: 9px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--orange); }
+  .event-date-day { font-size: 18px; font-weight: 700; color: var(--espresso); line-height: 1; }
+  .event-info h4 { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .event-meta { font-size: 11px; color: var(--espresso-60); }
+
+  .podcast-ep {
+    display: flex; gap: 12px; align-items: center; padding: 14px;
+    background: var(--cream-dark); border-radius: var(--radius-sm);
+  }
+  .podcast-thumb {
+    width: 52px; height: 52px; border-radius: var(--radius-sm);
+    background: var(--espresso); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .podcast-info { flex: 1; }
+  .podcast-ep-num { font-size: 10px; font-weight: 600; color: var(--orange); text-transform: uppercase; letter-spacing: 0.05em; }
+  .podcast-title { font-size: 13px; font-weight: 600; color: var(--espresso); margin: 2px 0; }
+  .podcast-duration { font-size: 11px; color: var(--espresso-60); }
+  .play-btn {
+    width: 32px; height: 32px; background: var(--espresso); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cream); font-size: 12px; flex-shrink: 0; cursor: pointer;
+  }
+
+  /* ─────────────────────────────────────── */
+  /*  PAGE: ROOMS                            */
+  /* ─────────────────────────────────────── */
+  .rooms-layout { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: calc(100vh - 50px); }
+  .rooms-sidebar {
+    border-right: 1px solid var(--espresso-20); padding: 28px 20px;
+    background: var(--white);
+  }
+  .room-list-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: var(--radius-sm);
+    cursor: pointer; margin-bottom: 2px; transition: background 0.1s;
+  }
+  .room-list-item:hover { background: var(--espresso-10); }
+  .room-list-item.active { background: var(--espresso-10); }
+  .room-icon {
+    width: 34px; height: 34px; border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .room-item-name { font-size: 13px; font-weight: 600; color: var(--espresso); }
+  .room-item-count { font-size: 11px; color: var(--espresso-60); }
+  .unread-dot {
+    width: 8px; height: 8px; background: var(--orange); border-radius: 50%;
+    margin-left: auto; flex-shrink: 0;
+  }
+
+  .room-view { display: flex; flex-direction: column; height: calc(100vh - 50px); }
+  .room-header {
+    padding: 16px 24px; border-bottom: 1px solid var(--espresso-20);
+    background: var(--white); display: flex; align-items: center; gap: 12px;
+  }
+  .room-header-icon {
+    width: 38px; height: 38px; border-radius: var(--radius-sm);
+    background: rgba(201,67,32,0.12); display: flex; align-items: center; justify-content: center; font-size: 18px;
+  }
+  .room-header-name { font-size: 16px; font-weight: 700; color: var(--espresso); }
+  .room-header-meta { font-size: 12px; color: var(--espresso-60); }
+  .room-online-count {
+    margin-left: auto; display: flex; align-items: center; gap: 5px;
+    font-size: 12px; color: var(--espresso-60);
+  }
+  .online-dot { width: 8px; height: 8px; background: #52c07a; border-radius: 50%; }
+
+  .room-messages { flex: 1; overflow-y: auto; padding: 20px 24px; background: var(--cream); }
+  .message-group { margin-bottom: 20px; }
+  .message-sender { display: flex; gap: 10px; align-items: flex-start; }
+  .message-avatar {
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: white;
+  }
+  .message-meta { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+  .message-name { font-size: 13px; font-weight: 700; color: var(--espresso); }
+  .message-time { font-size: 11px; color: var(--espresso-60); }
+  .message-bubble { font-size: 14px; color: var(--espresso); line-height: 1.55; }
+  .message-reactions { display: flex; gap: 4px; margin-top: 6px; }
+  .reaction {
+    display: inline-flex; align-items: center; gap: 3px;
+    background: var(--white); border: 1px solid var(--espresso-20);
+    border-radius: var(--radius-pill); padding: 2px 8px; font-size: 12px; cursor: pointer;
+  }
+  .reaction span { font-size: 11px; color: var(--espresso-60); }
+
+  .room-input-bar {
+    padding: 14px 24px; background: var(--white); border-top: 1px solid var(--espresso-20);
+  }
+  .room-input-inner {
+    display: flex; gap: 10px; align-items: center;
+    background: var(--cream); border-radius: var(--radius-pill);
+    padding: 8px 16px; border: 1.5px solid var(--espresso-20);
+  }
+  .room-input-inner input {
+    flex: 1; font-family: 'DM Sans', sans-serif; font-size: 14px;
+    background: none; border: none; outline: none; color: var(--espresso);
+  }
+  .room-input-inner input::placeholder { color: var(--espresso-60); }
+  .input-icon { font-size: 16px; cursor: pointer; color: var(--espresso-60); }
+
+  /* ─────────────────────────────────────── */
+  /*  PAGE: PROFILE                          */
+  /* ─────────────────────────────────────── */
+  /* ── PROFILE HERO (restructured) ── */
+  .profile-hero {
+    border-radius: var(--radius-lg); margin-bottom: 24px;
+    overflow: hidden; border: 1px solid var(--espresso-20);
+  }
+  .profile-cover {
+    height: 148px; background: linear-gradient(135deg, #3d2418 0%, #1a0e08 50%, #2d1a12 100%);
+    position: relative;
+  }
+  .profile-cover-texture {
+    position: absolute; inset: 0; opacity: 0.12;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(240,234,224,0.4) 8px, rgba(240,234,224,0.4) 9px),
+      repeating-linear-gradient(90deg, transparent, transparent 8px, rgba(240,234,224,0.4) 8px, rgba(240,234,224,0.4) 9px);
+  }
+  .profile-cover-edit {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(0,0,0,0.35); backdrop-filter: blur(4px);
+    border-radius: var(--radius-pill); padding: 5px 11px;
+    color: rgba(240,234,224,0.85); font-size: 11px; font-weight: 600; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  /* Avatar sits at the cover/content boundary */
+  .profile-avatar-row {
+    background: var(--white); padding: 0 28px 20px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+  }
+  .profile-avatar {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--olive); border: 4px solid var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 700; color: white;
+    margin-top: -40px; flex-shrink: 0; position: relative; z-index: 1;
+    box-shadow: 0 2px 12px rgba(45,26,18,0.15);
+  }
+  .profile-info { background: var(--white); padding: 12px 28px 24px; }
+  .profile-name { font-size: 22px; font-weight: 700; color: var(--espresso); margin-bottom: 3px; }
+  .profile-handle { font-size: 13px; color: var(--espresso-60); margin-bottom: 10px; }
+  .profile-bio { font-size: 14px; color: var(--espresso-60); line-height: 1.6; margin-bottom: 14px; }
+  .profile-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .profile-tag {
+    font-size: 11px; font-weight: 600; padding: 4px 10px;
+    border-radius: var(--radius-pill); background: var(--espresso-10);
+    color: var(--espresso); border: 1px solid var(--espresso-20);
+  }
+  .profile-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .profile-link-btn {
+    font-size: 11px; font-weight: 600; padding: 5px 12px;
+    border-radius: var(--radius-pill); background: transparent;
+    color: var(--espresso-60); border: 1.5px solid var(--espresso-20);
+    cursor: pointer; display: flex; align-items: center; gap: 4px;
+    transition: border-color 0.15s;
+  }
+  .profile-link-btn:hover { border-color: var(--espresso); color: var(--espresso); }
+
+  .profile-layout { display: grid; grid-template-columns: 1fr 260px; gap: 20px; }
+
+  /* ── PORTFOLIO (hybrid: link-out or file) ── */
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .portfolio-item {
+    border-radius: var(--radius); overflow: hidden; cursor: pointer;
+    background: var(--white); border: 1px solid var(--espresso-20);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .portfolio-item:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(45,26,18,0.1); }
+  .portfolio-thumb {
+    height: 130px; display: flex; align-items: center; justify-content: center;
+    font-size: 36px; position: relative; background: var(--cream-dark);
+  }
+  .portfolio-type-badge {
+    position: absolute; top: 8px; right: 8px;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: var(--radius-pill); color: white;
+  }
+  .portfolio-item-body { padding: 10px 12px 12px; }
+  .portfolio-item-title { font-size: 13px; font-weight: 700; color: var(--espresso); margin-bottom: 3px; }
+  .portfolio-item-desc { font-size: 11px; color: var(--espresso-60); line-height: 1.5; margin-bottom: 8px; }
+  .portfolio-item-link { font-size: 11px; font-weight: 600; color: var(--orange); cursor: pointer; }
+  .portfolio-add {
+    border-radius: var(--radius); border: 2px dashed var(--espresso-20);
+    cursor: pointer; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 6px;
+    color: var(--espresso-60); font-size: 12px; font-weight: 500;
+    transition: border-color 0.15s; min-height: 200px;
+  }
+  .portfolio-add:hover { border-color: var(--espresso); color: var(--espresso); }
+  .portfolio-add-icon { font-size: 24px; }
+
+  /* ─────────────────────────────────────── */
+  /*  PAGE: RESOURCES                        */
+  /* ─────────────────────────────────────── */
+  .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; align-items: center; }
+  .filter-chip {
+    font-size: 12px; font-weight: 600; padding: 6px 14px;
+    border-radius: var(--radius-pill); border: 1.5px solid var(--espresso-20);
+    background: var(--white); color: var(--espresso); cursor: pointer; transition: all 0.1s;
+  }
+  .filter-chip:hover { border-color: var(--espresso); }
+  .filter-chip.active { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
+
+  .resource-card {
+    background: var(--white); border-radius: var(--radius);
+    border: 1px solid var(--espresso-20); overflow: hidden; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .resource-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,26,18,0.1); }
+  .resource-thumb {
+    height: 140px; display: flex; align-items: center; justify-content: center;
+    font-size: 40px; position: relative;
+  }
+  .resource-type-badge {
+    position: absolute; top: 10px; left: 10px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: var(--radius-pill); color: white;
+  }
+  .badge-workshop { background: var(--orange); }
+  .badge-download { background: var(--olive); }
+  .badge-guide { background: var(--blue); }
+  .resource-body { padding: 14px 16px; }
+  .resource-title { font-size: 14px; font-weight: 700; color: var(--espresso); margin-bottom: 4px; }
+  .resource-desc { font-size: 12px; color: var(--espresso-60); margin-bottom: 12px; line-height: 1.5; }
+  .resource-footer { display: flex; align-items: center; justify-content: space-between; }
+  .resource-price { font-size: 15px; font-weight: 700; color: var(--espresso); }
+  .resource-price.free { color: var(--olive); }
+  .resource-price.included { color: var(--blue); font-size: 12px; font-weight: 600; }
+
+  /* ─────────────────────────────────────── */
+  /*  PAGE: INTERACT                         */
+  /* ─────────────────────────────────────── */
+  .interact-tabs { display: flex; gap: 0; margin-bottom: 28px; border-bottom: 2px solid var(--espresso-20); }
+  .interact-tab {
+    font-size: 15px; font-weight: 700; padding: 8px 24px 12px;
+    cursor: pointer; color: var(--espresso-60); border-bottom: 2px solid transparent;
+    margin-bottom: -2px; transition: all 0.1s;
+  }
+  .interact-tab.active { color: var(--espresso); border-bottom-color: var(--orange); }
+
+  .events-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .event-card {
+    background: var(--white); border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--espresso-20); cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .event-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,26,18,0.1); }
+  .event-card-header { height: 100px; position: relative; display: flex; align-items: flex-end; padding: 12px; }
+  .event-card-date {
+    background: white; border-radius: var(--radius-sm);
+    padding: 6px 10px; text-align: center; min-width: 48px;
+  }
+  .event-card-date .month { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange); }
+  .event-card-date .day { font-size: 22px; font-weight: 700; color: var(--espresso); line-height: 1; }
+  .event-card-body { padding: 14px 16px; }
+  .event-card-title { font-size: 15px; font-weight: 700; color: var(--espresso); margin-bottom: 6px; }
+  .event-card-meta { font-size: 12px; color: var(--espresso-60); display: flex; gap: 12px; margin-bottom: 12px; }
+  .event-card-host { display: flex; align-items: center; gap: 8px; }
+  .event-host-avatar {
+    width: 24px; height: 24px; border-radius: 50%; background: var(--orange);
+    display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: white;
+  }
+  .event-host-name { font-size: 12px; font-weight: 600; color: var(--espresso-60); }
+
+  .podcast-header {
+    display: flex; gap: 20px; align-items: flex-start;
+    background: var(--espresso); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px;
+  }
+  .podcast-cover {
+    width: 90px; height: 90px; border-radius: var(--radius);
+    background: var(--orange); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 36px;
+  }
+  .podcast-show-name { font-size: 20px; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
+  .podcast-show-desc { font-size: 13px; color: rgba(240,234,224,0.6); margin-bottom: 14px; line-height: 1.5; }
+  .podcast-listen-links { display: flex; gap: 8px; }
+  .listen-btn {
+    font-size: 11px; font-weight: 600; padding: 5px 12px;
+    border-radius: var(--radius-pill); background: rgba(240,234,224,0.1);
+    color: rgba(240,234,224,0.7); border: 1px solid rgba(240,234,224,0.15);
+    cursor: pointer;
+  }
+
+  .episode-list { display: flex; flex-direction: column; gap: 2px; }
+  .episode-item {
+    display: flex; gap: 14px; align-items: center; padding: 14px 16px;
+    background: var(--white); border-radius: var(--radius-sm);
+    cursor: pointer; transition: background 0.1s; border: 1px solid var(--espresso-20);
+  }
+  .episode-item:hover { background: var(--cream-dark); }
+  .episode-num {
+    width: 36px; height: 36px; border-radius: var(--radius-sm);
+    background: var(--espresso-10); display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--espresso); flex-shrink: 0;
+  }
+  .episode-info { flex: 1; }
+  .episode-title { font-size: 14px; font-weight: 600; color: var(--espresso); margin-bottom: 3px; }
+  .episode-guest { font-size: 12px; color: var(--espresso-60); }
+  .episode-date { font-size: 11px; color: var(--espresso-60); }
+  .episode-duration { font-size: 12px; color: var(--espresso-60); }
+
+  /* ─────────────────────────────────────── */
+  /*  PAGE: ONBOARDING                       */
+  /* ─────────────────────────────────────── */
+  .onboarding-shell {
+    min-height: calc(100vh - 50px); background: var(--cream);
+    display: flex; align-items: center; justify-content: center; padding: 40px;
+  }
+  .onboarding-card {
+    background: var(--white); border-radius: var(--radius-lg);
+    width: 100%; max-width: 520px; padding: 40px;
+    border: 1px solid var(--espresso-20);
+    box-shadow: 0 20px 60px rgba(45,26,18,0.08);
+  }
+  .onboarding-logo { margin-bottom: 32px; }
+  .progress-bar { height: 4px; background: var(--espresso-20); border-radius: 2px; margin-bottom: 32px; }
+  .progress-fill { height: 100%; background: var(--orange); border-radius: 2px; transition: width 0.3s; }
+  .step-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+  .step-title { font-size: 24px; font-weight: 700; color: var(--espresso); margin-bottom: 8px; }
+  .step-sub { font-size: 14px; color: var(--espresso-60); margin-bottom: 28px; line-height: 1.5; }
+  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
+  .role-card {
+    border: 2px solid var(--espresso-20); border-radius: var(--radius);
+    padding: 16px; cursor: pointer; transition: all 0.15s; text-align: center;
+  }
+  .role-card:hover { border-color: var(--espresso); }
+  .role-card.selected { border-color: var(--orange); background: rgba(201,67,32,0.06); }
+  .role-icon { font-size: 28px; margin-bottom: 8px; }
+  .role-name { font-size: 13px; font-weight: 700; color: var(--espresso); }
+  .tag-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+  .tag-select {
+    font-size: 12px; font-weight: 600; padding: 7px 14px;
+    border-radius: var(--radius-pill); border: 1.5px solid var(--espresso-20);
+    background: var(--white); color: var(--espresso); cursor: pointer; transition: all 0.15s;
+  }
+  .tag-select.selected { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
+  .plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px; }
+  .plan-card {
+    border: 2px solid var(--espresso-20); border-radius: var(--radius);
+    padding: 16px 12px; cursor: pointer; transition: all 0.15s; text-align: center;
+  }
+  .plan-card:hover { border-color: var(--espresso); }
+  .plan-card.selected { border-color: var(--orange); background: rgba(201,67,32,0.06); }
+  .plan-card.popular { border-color: var(--orange); }
+  .plan-popular-label {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 8px;
+  }
+  .plan-name { font-size: 15px; font-weight: 700; color: var(--espresso); margin-bottom: 4px; }
+  .plan-price { font-size: 22px; font-weight: 700; color: var(--espresso); }
+  .plan-price span { font-size: 12px; font-weight: 400; color: var(--espresso-60); }
+  .plan-feature { font-size: 11px; color: var(--espresso-60); margin-top: 8px; line-height: 1.6; }
+  .onboarding-actions { display: flex; justify-content: space-between; align-items: center; }
+
+  /* ─────────────────────────────────────── */
+  /*  PAGE: PROFILE EDIT                     */
+  /* ─────────────────────────────────────── */
+  .edit-layout { display: grid; grid-template-columns: 200px 1fr; gap: 0; min-height: calc(100vh - 50px); }
+  .edit-sidenav { border-right: 1px solid var(--espresso-20); padding: 28px 0; background: var(--white); }
+  .edit-nav-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+    font-size: 13px; font-weight: 500; color: var(--espresso-60); cursor: pointer;
+    transition: background 0.1s;
+  }
+  .edit-nav-item:hover { background: var(--espresso-10); color: var(--espresso); }
+  .edit-nav-item.active { background: var(--espresso-10); color: var(--espresso); font-weight: 600; border-right: 2px solid var(--orange); }
+  .edit-content { padding: 32px 40px; }
+  .edit-portfolio-row { display:flex;align-items:center;gap:14px;background:var(--white);border:1px solid var(--espresso-20);border-radius:var(--radius);padding:12px 14px;transition:border-color 0.15s; }
+  .edit-portfolio-row:hover { border-color:var(--espresso-40); }
+  .form-section { margin-bottom: 28px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-field { margin-bottom: 16px; }
+  .upload-zone {
+    border: 2px dashed var(--espresso-20); border-radius: var(--radius);
+    padding: 32px; text-align: center; cursor: pointer; transition: border-color 0.15s;
+  }
+  .upload-zone:hover { border-color: var(--espresso); }
+  .upload-icon { font-size: 32px; margin-bottom: 8px; }
+  .upload-text { font-size: 13px; color: var(--espresso-60); }
+  .upload-text strong { color: var(--espresso); }
+  .char-count { font-size: 11px; color: var(--espresso-60); text-align: right; margin-top: 4px; }
+
+  /* ── PIN BUTTON ── */
+  .pin-btn {
+    font-size: 13px; cursor: pointer; opacity: 0; flex-shrink: 0;
+    transition: opacity 0.15s; width: 20px; text-align: center;
+    color: var(--espresso-60);
+  }
+  .pin-btn.pinned { opacity: 1; }
+  .room-list-item:hover .pin-btn { opacity: 1; }
+
+  /* ─────────────────────────────────────── */
+  /*  SCROLLBAR                              */
+  /* ─────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--espresso-20); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN SWITCHER -->
+<div class="screen-nav">
+  <span>Screen:</span>
+  <button class="screen-btn active" onclick="showScreen('home')">Home</button>
+  <button class="screen-btn" onclick="showScreen('rooms')">Rooms</button>
+  <button class="screen-btn" onclick="showScreen('profile-view')">Profile View</button>
+  <button class="screen-btn" onclick="showScreen('profile-edit')">Profile Edit</button>
+  <button class="screen-btn" onclick="showScreen('resources')">Resources</button>
+  <button class="screen-btn" onclick="showScreen('interact-events')">Events</button>
+  <button class="screen-btn" onclick="showScreen('interact-podcast')">Podcast</button>
+  <button class="screen-btn" onclick="showScreen('onboarding')">Onboarding</button>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  MAIN APP SHELL (all screens except onboarding) -->
+<!-- ══════════════════════════════════════════ -->
+<div class="app-wrapper visible" id="app-shell">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark"><span></span><span></span><span></span></div>
+      <div class="logo-text">draft club</div>
+    </div>
+    <div class="nav-section-label">Main</div>
+    <div class="nav-item active" id="nav-home" onclick="showScreen('home')">
+      <span class="icon">⌂</span> Home
+    </div>
+    <div class="nav-item" id="nav-rooms" onclick="showScreen('rooms')">
+      <span class="icon">💬</span> Rooms
+    </div>
+    <div class="nav-item" id="nav-profile" onclick="showScreen('profile-view')">
+      <span class="icon">◎</span> My Profile
+    </div>
+    <div class="nav-section-label" style="margin-top:8px">Explore</div>
+    <div class="nav-item" id="nav-resources" onclick="showScreen('resources')">
+      <span class="icon">◈</span> Resources
+    </div>
+    <div class="nav-item" id="nav-interact" onclick="showScreen('interact-events')">
+      <span class="icon">✦</span> Interact
+    </div>
+    <div class="sidebar-socials">
+      <div class="sidebar-socials-label">Find us</div>
+      <div class="social-icons">
+        <a class="social-icon" title="Instagram">📸</a>
+        <a class="social-icon" title="TikTok">🎵</a>
+        <a class="social-icon" title="YouTube">▶</a>
+        <a class="social-icon" title="Spotify">🎙</a>
+        <a class="social-icon" title="Substack">✉</a>
+        <a class="social-icon" title="LinkedIn">in</a>
+      </div>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="member-chip">Member</div>
+      <div class="avatar-row">
+        <div class="avatar-sm">LW</div>
+        <div>
+          <div class="avatar-name">Lexi Wulf</div>
+          <div class="avatar-role">Photographer · Chicago</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN AREA -->
+  <div class="main">
+
+    <!-- ══ HOME ══ -->
+    <div class="page visible" id="page-home">
+      <div class="home-welcome">
+        <div class="welcome-greeting">Good morning, Lexi ☕</div>
+        <div class="welcome-sub">You've got 3 new messages across your rooms and an event coming up Friday.</div>
+        <div class="welcome-stats">
+          <div class="stat-item"><div class="stat-num">247</div><div class="stat-label">Members Online</div></div>
+          <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Your Rooms</div></div>
+          <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Upcoming Events</div></div>
+        </div>
+      </div>
+
+      <div class="home-grid">
+        <div class="home-left">
+
+          <!-- Activity Feed -->
+          <div class="card">
+            <h3>Recent Activity <span class="ann">feed — 20 most recent</span></h3>
+            <div class="activity-item">
+              <div class="activity-avatar" style="background:var(--orange)">MR</div>
+              <div>
+                <div class="activity-text"><strong>Maya Rodriguez</strong> posted in <strong>#photographers-corner</strong> — "Anyone going to the print fair this weekend?"</div>
+                <div class="activity-time">2 min ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-avatar" style="background:var(--olive)">TK</div>
+              <div>
+                <div class="activity-text"><strong>Theo Kim</strong> joined the club 🎉 and added their first portfolio piece</div>
+                <div class="activity-time">14 min ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-avatar" style="background:var(--blue)">SA</div>
+              <div>
+                <div class="activity-text"><strong>Simone Adeyemi</strong> posted a new resource: <strong>Pricing Your Creative Work</strong></div>
+                <div class="activity-time">1 hr ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-avatar" style="background:#8B6B4A">JL</div>
+              <div>
+                <div class="activity-text"><strong>Jordan Lee</strong> is hosting an event in Chicago — <strong>Portfolio Reviews IRL</strong></div>
+                <div class="activity-time">3 hrs ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-avatar" style="background:var(--orange)">PW</div>
+              <div>
+                <div class="activity-text"><strong>Priya Watts</strong> reacted to your message in <strong>#small-biz-owners</strong></div>
+                <div class="activity-time">5 hrs ago</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Workshop -->
+          <div class="featured-card">
+            <div class="featured-label">✦ Featured Workshop</div>
+            <div class="featured-title">Building a Client Pipeline That Doesn't Suck</div>
+            <div class="featured-sub">6 modules · Self-paced · Lexi Wulf</div>
+            <button class="btn" style="background:white;color:var(--orange)">View Workshop →</button>
+          </div>
+
+        </div>
+        <div class="home-right">
+
+          <!-- Upcoming Events -->
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+              <h3 style="margin:0">Upcoming Near You</h3>
+              <span style="font-size:12px;color:var(--orange);cursor:pointer;font-weight:600">See all →</span>
+            </div>
+            <div class="event-item">
+              <div class="event-date-block">
+                <div class="event-date-month">May</div>
+                <div class="event-date-day">23</div>
+              </div>
+              <div class="event-info">
+                <h4>Portfolio Reviews IRL</h4>
+                <div class="event-meta">📍 Chicago · In-Person</div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date-block">
+                <div class="event-date-month">Jun</div>
+                <div class="event-date-day">07</div>
+              </div>
+              <div class="event-info">
+                <h4>Creative Biz Happy Hour</h4>
+                <div class="event-meta">📍 Chicago · In-Person</div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date-block">
+                <div class="event-date-month">Jun</div>
+                <div class="event-date-day">14</div>
+              </div>
+              <div class="event-info">
+                <h4>Pricing Workshop (Virtual)</h4>
+                <div class="event-meta">💻 Virtual · Zoom</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Latest Podcast -->
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+              <h3 style="margin:0">Latest Episode</h3>
+              <span style="font-size:12px;color:var(--orange);cursor:pointer;font-weight:600">All eps →</span>
+            </div>
+            <div class="podcast-ep">
+              <div class="podcast-thumb">🎙</div>
+              <div class="podcast-info">
+                <div class="podcast-ep-num">Ep. 47</div>
+                <div class="podcast-title">When to Say No to Clients</div>
+                <div class="podcast-duration">38 min · May 15, 2026</div>
+              </div>
+              <div class="play-btn">▶</div>
+            </div>
+          </div>
+
+          <!-- Membership CTA -->
+          <div class="card" style="background:var(--olive);border:none">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.7);margin-bottom:6px">Your Plan</div>
+            <div style="font-size:16px;font-weight:700;color:white;margin-bottom:4px">Member ✓</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:14px">Renews June 1 · $12/mo</div>
+            <button class="btn btn-sm" style="background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3)">Upgrade to Pro</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ROOMS ══ -->
+    <div class="page" id="page-rooms" style="padding:0">
+      <div class="rooms-layout">
+
+        <!-- Room Sidebar -->
+        <div class="rooms-sidebar" style="overflow-y:auto">
+          <div style="padding:0 12px 14px;border-bottom:1px solid var(--espresso-20);margin-bottom:10px">
+            <div style="font-size:16px;font-weight:700;margin-bottom:12px;padding-top:4px">Rooms</div>
+            <div style="display:flex;align-items:center;gap:8px;background:var(--cream);border:1.5px solid var(--espresso-20);border-radius:var(--radius-pill);padding:7px 12px">
+              <span style="color:var(--espresso-60);font-size:13px">🔍</span>
+              <input style="background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;color:var(--espresso)" placeholder="Search rooms…">
+            </div>
+          </div>
+
+          <!-- Pinned Rooms (dynamic, populated by JS) -->
+          <div id="pinned-rooms-section" style="display:block">
+            <div class="nav-section-label" style="display:flex;align-items:center;justify-content:space-between;padding-right:12px">
+              <span>Pinned</span>
+            </div>
+            <div id="pinned-rooms-list">
+              <!-- populated by JS -->
+              <div class="room-list-item active" data-room="photographers">
+                <div class="room-icon" style="background:rgba(201,67,32,0.12)">📷</div>
+                <div style="flex:1;min-width:0">
+                  <div class="room-item-name">Photographers' Corner</div>
+                  <div class="room-item-count">Your craft room</div>
+                </div>
+                <div class="unread-dot"></div>
+                <span class="pin-btn pinned" onclick="togglePin(event,'photographers')" title="Unpin">📌</span>
+              </div>
+              <div class="room-list-item" data-room="money">
+                <div class="room-icon" style="background:rgba(155,155,36,0.12)">💰</div>
+                <div style="flex:1;min-width:0">
+                  <div class="room-item-name">Money Talk</div>
+                  <div class="room-item-count">Community</div>
+                </div>
+                <div class="unread-dot"></div>
+                <span class="pin-btn pinned" onclick="togglePin(event,'money')" title="Unpin">📌</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="divider" style="margin:10px 0">
+
+          <!-- Community Rooms -->
+          <div class="nav-section-label">Community</div>
+
+          <div class="room-list-item" data-room="creative-pour">
+            <div class="room-icon" style="background:rgba(201,67,32,0.1)">☕</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Creative Pour</div>
+              <div class="room-item-count">The general hangout. Wins, updates, the vibe.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'creative-pour')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="money">
+            <div class="room-icon" style="background:rgba(155,155,36,0.1)">💰</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Money Talk</div>
+              <div class="room-item-count">Rates, pricing, invoices, the real numbers.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'money')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="collab">
+            <div class="room-icon" style="background:rgba(107,141,181,0.12)">🤝</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Collab Corner</div>
+              <div class="room-item-count">Find partners, post open projects, make things.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'collab')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="feedback">
+            <div class="room-icon" style="background:rgba(45,26,18,0.08)">💬</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Feedback Room</div>
+              <div class="room-item-count">Share work, get honest critique, give yours too.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'feedback')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="inspiration">
+            <div class="room-icon" style="background:rgba(201,67,32,0.08)">✨</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Inspiration</div>
+              <div class="room-item-count">Mood boards, references, what's got you going lately.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'inspiration')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="commons">
+            <div class="room-icon" style="background:rgba(107,141,181,0.1)">🌐</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">The Commons</div>
+              <div class="room-item-count">Cross-industry, open to everyone. Come as you are.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'commons')" title="Pin">·</span>
+          </div>
+
+          <hr class="divider" style="margin:10px 0">
+
+          <!-- By Craft -->
+          <div class="nav-section-label">By Craft</div>
+          <div class="room-list-item" data-room="photographers">
+            <div class="room-icon" style="background:rgba(201,67,32,0.08)">📷</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Photographers' Corner</div>
+              <div class="room-item-count">Gear, shoots, clients, the whole thing.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'photographers')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="designers">
+            <div class="room-icon" style="background:rgba(155,155,36,0.08)">🎨</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Designers' Studio</div>
+              <div class="room-item-count">Process, tools, client work, and critique.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'designers')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="writers">
+            <div class="room-icon" style="background:rgba(107,141,181,0.1)">✍️</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Writers' Room</div>
+              <div class="room-item-count">Copy, content, editorial, and the blank page.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'writers')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="video">
+            <div class="room-icon" style="background:rgba(45,26,18,0.08)">🎬</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Video & Film</div>
+              <div class="room-item-count">Filmmakers, editors, directors, and motion folks.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'video')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="podcasters">
+            <div class="room-icon" style="background:rgba(201,67,32,0.06)">🎙</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Podcasters' Club</div>
+              <div class="room-item-count">Recording, editing, growing a show, and everything in between.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'podcasters')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="illustrators">
+            <div class="room-icon" style="background:rgba(155,155,36,0.08)">🖼</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Illustrators' Den</div>
+              <div class="room-item-count">Digital, print, commissions, and the art life.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'illustrators')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="beauty">
+            <div class="room-icon" style="background:rgba(107,141,181,0.08)">💄</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Beauty & Styling</div>
+              <div class="room-item-count">Hair, makeup, wardrobe, and the set life.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'beauty')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="music">
+            <div class="room-icon" style="background:rgba(45,26,18,0.06)">🎵</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Music Makers</div>
+              <div class="room-item-count">Artists, producers, and everyone making noise.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'music')" title="Pin">·</span>
+          </div>
+
+          <hr class="divider" style="margin:10px 0">
+
+          <!-- By Industry -->
+          <div class="nav-section-label">By Industry</div>
+          <div class="room-list-item" data-room="retail">
+            <div class="room-icon" style="background:rgba(201,67,32,0.08)">🏪</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Shop Talk — Retail</div>
+              <div class="room-item-count">Running a shop, managing inventory, scaling up.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'retail')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="food">
+            <div class="room-icon" style="background:rgba(155,155,36,0.08)">🍽</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Food & Hospitality</div>
+              <div class="room-item-count">Restaurants, caterers, bakers, and food creatives.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'food')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="marketing">
+            <div class="room-icon" style="background:rgba(107,141,181,0.1)">📣</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Marketing Minds</div>
+              <div class="room-item-count">Strategy, campaigns, social, and growth.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'marketing')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="brand">
+            <div class="room-icon" style="background:rgba(45,26,18,0.06)">💼</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Brand Strategy</div>
+              <div class="room-item-count">Positioning, identity, and the thinking behind it.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'brand')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="wellness">
+            <div class="room-icon" style="background:rgba(155,155,36,0.06)">🌿</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Wellness</div>
+              <div class="room-item-count">Health, fitness, mindfulness, and the wellness business.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'wellness')" title="Pin">·</span>
+          </div>
+          <div class="room-list-item" data-room="tech">
+            <div class="room-icon" style="background:rgba(107,141,181,0.08)">💻</div>
+            <div style="flex:1;min-width:0">
+              <div class="room-item-name">Tech & Product</div>
+              <div class="room-item-count">Builders, founders, and people making digital things.</div>
+            </div>
+            <span class="pin-btn" onclick="togglePin(event,'tech')" title="Pin">·</span>
+          </div>
+
+          <div style="padding:10px 12px 4px">
+            <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center" onclick="showSuggestRoom()">+ Suggest a Room</button>
+          </div>
+
+          <!-- Suggest a Room Lightbox -->
+          <div id="suggest-room-modal" onclick="hideSuggestRoom(event)" style="display:none;position:fixed;inset:0;background:rgba(45,26,18,0.55);z-index:600;align-items:center;justify-content:center">
+            <div onclick="event.stopPropagation()" style="background:var(--white);border-radius:var(--radius-lg);padding:36px;max-width:460px;width:90%;box-shadow:0 24px 64px rgba(45,26,18,0.2)">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                <div style="font-size:18px;font-weight:700;color:var(--espresso)">Suggest a Room</div>
+                <button onclick="hideSuggestRoom()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--espresso-60)">✕</button>
+              </div>
+              <div style="font-size:13px;color:var(--espresso-60);margin-bottom:24px;line-height:1.5">Got a community you want to see here? Tell us what it is and why it belongs. We review suggestions regularly and build rooms when there's real demand.</div>
+              <div class="form-field">
+                <label class="input-label">Room Name</label>
+                <input class="input-field" placeholder="e.g. Architecture & Interiors">
+              </div>
+              <div class="form-field">
+                <label class="input-label">Category</label>
+                <select class="input-field" style="cursor:pointer">
+                  <option value="">Select one…</option>
+                  <option>By Craft</option>
+                  <option>By Industry</option>
+                  <option>Community / Topic</option>
+                </select>
+              </div>
+              <div class="form-field" style="margin-bottom:24px">
+                <label class="input-label">Why should this room exist?</label>
+                <textarea class="input-field" rows="3" style="resize:none" placeholder="Who would use it? What would people talk about? Is there a gap you keep noticing?"></textarea>
+              </div>
+              <div style="background:var(--espresso-10);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:20px;font-size:12px;color:var(--espresso-60);line-height:1.5">
+                💡 Rooms with <strong style="color:var(--espresso)">10+ independent suggestions</strong> move to active review. You'll hear back either way.
+              </div>
+              <div style="display:flex;gap:10px;justify-content:flex-end">
+                <button class="btn btn-outline" onclick="hideSuggestRoom()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitSuggestRoom()">Submit Suggestion</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Room Chat View -->
+        <div class="room-view">
+          <div class="room-header">
+            <div class="room-header-icon">📷</div>
+            <div>
+              <div class="room-header-name">Photographers' Corner</div>
+              <div class="room-header-meta">For photographers building a creative business</div>
+            </div>
+            <div class="room-online-count">
+              <div class="online-dot"></div> 24 online
+            </div>
+          </div>
+
+          <div class="room-messages">
+            <!-- Date divider -->
+            <div style="text-align:center;margin:12px 0 20px">
+              <span style="font-size:11px;font-weight:600;color:var(--espresso-60);background:var(--cream-dark);padding:4px 12px;border-radius:20px">Today</span>
+            </div>
+
+            <div class="message-group">
+              <div class="message-sender">
+                <div class="message-avatar" style="background:var(--orange)">MR</div>
+                <div>
+                  <div class="message-meta">
+                    <span class="message-name">Maya Rodriguez</span>
+                    <span class="tag tag-orange" style="font-size:9px;padding:2px 6px">Photographer</span>
+                    <span class="message-time">9:42 AM</span>
+                  </div>
+                  <div class="message-bubble">Anyone going to the print fair this weekend? Trying to figure out if it's worth the trip from Logan Square</div>
+                  <div class="message-reactions">
+                    <div class="reaction">👀 <span>4</span></div>
+                    <div class="reaction">❤️ <span>2</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="message-group">
+              <div class="message-sender">
+                <div class="message-avatar" style="background:var(--blue)">TK</div>
+                <div>
+                  <div class="message-meta">
+                    <span class="message-name">Theo Kim</span>
+                    <span class="message-time">9:55 AM</span>
+                  </div>
+                  <div class="message-bubble">YES going Saturday! There's also a zine fest happening in the same building. Full nerd day planned honestly</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="message-group">
+              <div class="message-sender">
+                <div class="message-avatar" style="background:var(--olive)">LW</div>
+                <div>
+                  <div class="message-meta">
+                    <span class="message-name">Lexi Wulf</span>
+                    <span style="font-size:10px;color:var(--espresso-60);background:var(--espresso-10);padding:2px 6px;border-radius:4px;font-weight:600">you</span>
+                    <span class="message-time">10:01 AM</span>
+                  </div>
+                  <div class="message-bubble">ok that settles it I'm going. Theo can you send the address? I couldn't find parking info last time</div>
+                  <div class="message-reactions">
+                    <div class="reaction">😂 <span>3</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="message-group">
+              <div class="message-sender">
+                <div class="message-avatar" style="background:#8B6B4A">SA</div>
+                <div>
+                  <div class="message-meta">
+                    <span class="message-name">Simone Adeyemi</span>
+                    <span class="message-time">10:08 AM</span>
+                  </div>
+                  <div class="message-bubble">Heads up for anyone shooting product lately — I posted a new resource in the library about lighting setups for small studio spaces. Free for members 👆</div>
+                  <div class="message-reactions">
+                    <div class="reaction">🙌 <span>7</span></div>
+                    <div class="reaction">🔖 <span>2</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="room-input-bar">
+            <div class="room-input-inner">
+              <span class="input-icon">😊</span>
+              <input placeholder="Message #photographers-corner…">
+              <span class="input-icon">📎</span>
+              <span class="input-icon" style="color:var(--orange)">↑</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PROFILE VIEW ══ -->
+    <div class="page" id="page-profile-view" style="padding:0">
+      <div style="padding:36px 40px">
+
+        <!-- Profile Hero — fixed structure -->
+        <div class="profile-hero">
+          <div class="profile-cover">
+            <div class="profile-cover-texture"></div>
+            <div class="profile-cover-edit">✎ Edit Cover</div>
+          </div>
+          <!-- Avatar row sits at the boundary, on white background -->
+          <div class="profile-avatar-row">
+            <div class="profile-avatar">LW</div>
+            <button class="btn btn-outline btn-sm" style="margin-bottom:4px" onclick="showScreen('profile-edit')">✎ Edit Profile</button>
+          </div>
+          <div class="profile-info">
+            <div class="profile-name">Lexi Wulf</div>
+            <div class="profile-handle">@lexiwulf · Chicago, IL · Photographer</div>
+            <div class="profile-bio">Creative director & photographer building Draft Club for people like us. Let's make something good together.</div>
+            <div class="profile-tags">
+              <span class="profile-tag">📷 Photography</span>
+              <span class="profile-tag">🎨 Creative Direction</span>
+              <span class="profile-tag">💼 Small Business</span>
+              <span class="profile-tag">🎙 Podcasting</span>
+            </div>
+            <div class="profile-links">
+              <div class="profile-link-btn">🌐 Website ↗</div>
+              <div class="profile-link-btn">📸 Instagram ↗</div>
+              <div class="profile-link-btn">in LinkedIn ↗</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="profile-layout">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <h3 style="margin:0">Portfolio</h3>
+              <button class="btn btn-outline btn-sm" onclick="showPortfolioAdd()">+ Add Work</button>
+            </div>
+            <div style="font-size:12px;color:var(--espresso-60);margin-bottom:16px;line-height:1.5">
+              Each piece links to where your work actually lives — your site, Behance, a case study, or a direct file download.
+            </div>
+            <div class="portfolio-grid">
+
+              <div class="portfolio-item" onclick="showPortfolioDetail('candle')">
+                <div class="portfolio-thumb" style="background:linear-gradient(135deg,#C94320,#8B2E10)">
+                  <span>🕯</span>
+                  <div class="portfolio-type-badge" style="background:var(--orange)">Link</div>
+                </div>
+                <div class="portfolio-item-body">
+                  <div class="portfolio-item-title">Brand Shoot — Lux Candle Co.</div>
+                  <div class="portfolio-item-desc">Product photography for a Chicago-based candle brand. 40 images, studio + lifestyle.</div>
+                  <div class="portfolio-item-link">View on Website ↗</div>
+                </div>
+              </div>
+
+              <div class="portfolio-item" onclick="showPortfolioDetail('editorial')">
+                <div class="portfolio-thumb" style="background:linear-gradient(135deg,#9B9B24,#5E5E16)">
+                  <span>📰</span>
+                  <div class="portfolio-type-badge" style="background:var(--olive)">PDF</div>
+                </div>
+                <div class="portfolio-item-body">
+                  <div class="portfolio-item-title">Editorial — Chicago Magazine</div>
+                  <div class="portfolio-item-desc">6-page editorial spread. Art directed and shot over two days in the West Loop.</div>
+                  <div class="portfolio-item-link">Download PDF ↓</div>
+                </div>
+              </div>
+
+              <div class="portfolio-item" onclick="showPortfolioDetail('portrait')">
+                <div class="portfolio-thumb" style="background:linear-gradient(135deg,#6B8DB5,#3d5f87)">
+                  <span>🎞</span>
+                  <div class="portfolio-type-badge" style="background:var(--blue)">Link</div>
+                </div>
+                <div class="portfolio-item-body">
+                  <div class="portfolio-item-title">Portrait Series 2025</div>
+                  <div class="portfolio-item-desc">A 12-image portrait series documenting Chicago creatives in their workspaces.</div>
+                  <div class="portfolio-item-link">View on Behance ↗</div>
+                </div>
+              </div>
+
+              <div class="portfolio-item" onclick="showPortfolioDetail('workshop')">
+                <div class="portfolio-thumb" style="background:linear-gradient(135deg,#2D1A12,#1a0e08)">
+                  <span>📷</span>
+                  <div class="portfolio-type-badge" style="background:var(--espresso)">Link</div>
+                </div>
+                <div class="portfolio-item-body">
+                  <div class="portfolio-item-title">Draft Club — Workshop Recap</div>
+                  <div class="portfolio-item-desc">Event photography from the first Draft Club IRL workshop. March 2026.</div>
+                  <div class="portfolio-item-link">View Gallery ↗</div>
+                </div>
+              </div>
+
+              <div class="portfolio-item" onclick="showPortfolioDetail('bloom')">
+                <div class="portfolio-thumb" style="background:linear-gradient(135deg,#8B6B4A,#5e4530)">
+                  <span>🌸</span>
+                  <div class="portfolio-type-badge" style="background:var(--orange)">Link</div>
+                </div>
+                <div class="portfolio-item-body">
+                  <div class="portfolio-item-title">Client Work — Bloom Studio</div>
+                  <div class="portfolio-item-desc">Brand identity shoot for a wellness studio. Natural light, film-inspired grade.</div>
+                  <div class="portfolio-item-link">View Case Study ↗</div>
+                </div>
+              </div>
+
+              <div class="portfolio-add" onclick="showPortfolioAdd()">
+                <div class="portfolio-add-icon">+</div>
+                <div style="font-weight:600">Add work</div>
+                <div style="font-size:11px;text-align:center;padding:0 12px;line-height:1.5">Link out or attach a file</div>
+              </div>
+
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div class="card">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--espresso-60);margin-bottom:8px">Member Since</div>
+              <div style="font-size:20px;font-weight:700;color:var(--orange)">Jan 2026</div>
+              <div style="font-size:12px;color:var(--espresso-60);margin-top:1px">Draft Club Member</div>
+            </div>
+            <div class="card">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--espresso-60);margin-bottom:10px">Pinned Rooms</div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <div style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><span>📷</span> <span>Photographers' Corner</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><span>💰</span> <span>Money Talk</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><span>🤝</span> <span>Collab Corner</span></div>
+              </div>
+            </div>
+            <div class="card">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--espresso-60);margin-bottom:8px">My Library</div>
+              <div style="font-size:28px;font-weight:700;color:var(--espresso)">8</div>
+              <div style="font-size:12px;color:var(--espresso-60)">resources downloaded</div>
+              <button class="btn btn-outline btn-sm" style="margin-top:10px;width:100%;justify-content:center">View Library →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portfolio Add Modal -->
+        <div id="portfolio-add-modal" onclick="hidePortfolioAdd(event)" style="display:none;position:fixed;inset:0;background:rgba(45,26,18,0.5);z-index:500;align-items:center;justify-content:center">
+          <div onclick="event.stopPropagation()" style="background:var(--white);border-radius:var(--radius-lg);padding:36px;max-width:480px;width:90%;box-shadow:0 24px 64px rgba(45,26,18,0.15)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+              <div style="font-size:18px;font-weight:700;color:var(--espresso)">Add Portfolio Work</div>
+              <button onclick="hidePortfolioAdd()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--espresso-60)">✕</button>
+            </div>
+            <div class="form-field">
+              <label class="input-label">Cover Image</label>
+              <div class="upload-zone" style="padding:20px">
+                <div class="upload-icon">🖼</div>
+                <div class="upload-text">Drag an image or <strong>browse</strong></div>
+                <div style="font-size:11px;color:var(--espresso-60);margin-top:4px">JPG or PNG · Max 10MB · Used as the tile thumbnail</div>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="input-label">Title</label>
+              <input class="input-field" placeholder="e.g. Brand Shoot — Lux Candle Co.">
+            </div>
+            <div class="form-field">
+              <label class="input-label">Description <span style="font-weight:400;color:var(--espresso-60)">(optional)</span></label>
+              <textarea class="input-field" rows="2" style="resize:none" placeholder="Brief context about the work — client, scope, medium…"></textarea>
+            </div>
+            <!-- Link or file toggle -->
+            <div style="margin-bottom:16px">
+              <label class="input-label">Where does this work live?</label>
+              <div style="display:flex;gap:8px;margin-bottom:12px">
+                <div id="pf-type-link" onclick="setPfType('link')" style="flex:1;padding:10px;border:2px solid var(--orange);border-radius:var(--radius-sm);text-align:center;cursor:pointer;background:rgba(201,67,32,0.06)">
+                  <div style="font-size:16px;margin-bottom:3px">🔗</div>
+                  <div style="font-size:12px;font-weight:700;color:var(--espresso)">External Link</div>
+                  <div style="font-size:10px;color:var(--espresso-60)">Website, Behance, etc.</div>
+                </div>
+                <div id="pf-type-file" onclick="setPfType('file')" style="flex:1;padding:10px;border:2px solid var(--espresso-20);border-radius:var(--radius-sm);text-align:center;cursor:pointer">
+                  <div style="font-size:16px;margin-bottom:3px">📎</div>
+                  <div style="font-size:12px;font-weight:700;color:var(--espresso)">File Upload</div>
+                  <div style="font-size:10px;color:var(--espresso-60)">PDF or image file</div>
+                </div>
+              </div>
+              <div id="pf-link-field">
+                <input class="input-field" placeholder="https://yoursite.com/project">
+              </div>
+              <div id="pf-file-field" style="display:none">
+                <div class="upload-zone" style="padding:16px">
+                  <div class="upload-text">Drop a PDF or image, or <strong>browse</strong></div>
+                  <div style="font-size:11px;color:var(--espresso-60);margin-top:4px">PDF, JPG, PNG · Max 50MB</div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+              <button class="btn btn-outline" onclick="hidePortfolioAdd()">Cancel</button>
+              <button class="btn btn-primary">Save to Portfolio</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portfolio Detail Modal -->
+        <div id="portfolio-detail-modal" onclick="hidePortfolioDetail(event)" style="display:none;position:fixed;inset:0;background:rgba(45,26,18,0.5);z-index:500;align-items:center;justify-content:center">
+          <div onclick="event.stopPropagation()" style="background:var(--white);border-radius:var(--radius-lg);max-width:520px;width:90%;overflow:hidden;box-shadow:0 24px 64px rgba(45,26,18,0.15)">
+            <div id="pf-detail-thumb" style="height:200px;background:linear-gradient(135deg,#C94320,#8B2E10);display:flex;align-items:center;justify-content:center;font-size:52px;position:relative">
+              <span id="pf-detail-emoji">🕯</span>
+              <button onclick="hidePortfolioDetail()" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.3);border:none;color:white;font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer">✕</button>
+              <div id="pf-detail-badge" style="position:absolute;top:14px;left:14px;background:var(--orange);color:white;font-size:9px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:3px 9px;border-radius:var(--radius-pill)">Link</div>
+            </div>
+            <div style="padding:24px">
+              <div id="pf-detail-title" style="font-size:20px;font-weight:700;color:var(--espresso);margin-bottom:8px">Brand Shoot — Lux Candle Co.</div>
+              <div id="pf-detail-desc" style="font-size:14px;color:var(--espresso-60);line-height:1.65;margin-bottom:20px">Product photography for a Chicago-based candle brand. 40 images, studio + lifestyle.</div>
+              <div style="display:flex;gap:10px">
+                <button id="pf-detail-cta" class="btn btn-primary" style="flex:1;justify-content:center">View on Website ↗</button>
+                <button onclick="hidePortfolioDetail()" class="btn btn-outline btn-sm">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PROFILE EDIT ══ -->
+    <div class="page" id="page-profile-edit" style="padding:0">
+      <div class="edit-layout">
+        <div class="edit-sidenav">
+          <div style="padding:20px 20px 16px;font-size:16px;font-weight:700;border-bottom:1px solid var(--espresso-20);margin-bottom:8px">Edit Profile</div>
+          <div class="edit-nav-item active" id="edit-nav-identity" onclick="editGoTo('identity')">👤 Identity</div>
+          <div class="edit-nav-item" id="edit-nav-role-tags" onclick="editGoTo('role-tags')">🏷 Role & Tags</div>
+          <div class="edit-nav-item" id="edit-nav-links" onclick="editGoTo('links')">🔗 Links</div>
+          <div class="edit-nav-item" id="edit-nav-portfolio" onclick="editGoTo('portfolio')">🗂 Portfolio</div>
+        </div>
+        <div class="edit-content">
+
+          <!-- ── SECTION: IDENTITY ── -->
+          <div id="edit-section-identity">
+            <div class="page-title">Identity <span class="ann">1 of 4</span></div>
+            <div class="page-sub">This is what other members see on your profile.</div>
+
+            <div class="form-section">
+              <label class="input-label">Profile Photo</label>
+              <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+                <div style="width:72px;height:72px;border-radius:50%;background:var(--olive);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:white;flex-shrink:0">LW</div>
+                <div>
+                  <button class="btn btn-outline btn-sm">Upload Photo</button>
+                  <div style="font-size:11px;color:var(--espresso-60);margin-top:5px">JPG or PNG · Max 5MB</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label class="input-label">Display Name</label>
+                <input class="input-field" value="Lexi Wulf">
+              </div>
+              <div>
+                <label class="input-label">Username</label>
+                <input class="input-field" value="@lexiwulf">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="input-label">Bio</label>
+              <textarea class="input-field" rows="3" style="resize:none">Photographer & creative director. Building Draft Club for people like us. Let's make something good.</textarea>
+              <div class="char-count">92 / 200</div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label class="input-label">Pronouns</label>
+                <input class="input-field" value="she/her">
+              </div>
+              <div>
+                <label class="input-label">City</label>
+                <input class="input-field" value="Chicago, IL">
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:24px">
+              <button class="btn btn-outline" onclick="showScreen('profile-view')">Cancel</button>
+              <button class="btn btn-primary">Save Changes</button>
+            </div>
+          </div>
+
+          <!-- ── SECTION: ROLE & TAGS ── -->
+          <div id="edit-section-role-tags" style="display:none">
+            <div class="page-title">Role & Tags <span class="ann">2 of 4</span></div>
+            <div class="page-sub">Tell us what you do. This shapes your room suggestions and the resources that show up for you.</div>
+
+            <label class="input-label" style="margin-bottom:10px;display:block">What best describes you?</label>
+            <div class="role-grid" id="edit-role-grid" style="margin-bottom:20px">
+              <div class="role-card selected" data-role="creative" onclick="editSelectRole(this)">
+                <div class="role-icon">🎨</div>
+                <div class="role-name">Creative</div>
+                <div style="font-size:11px;color:var(--espresso-60);margin-top:4px">Photographer, designer, writer, maker</div>
+              </div>
+              <div class="role-card" data-role="biz" onclick="editSelectRole(this)">
+                <div class="role-icon">🏪</div>
+                <div class="role-name">Small Biz Owner</div>
+                <div style="font-size:11px;color:var(--espresso-60);margin-top:4px">Running a shop, studio, or service</div>
+              </div>
+              <div class="role-card" data-role="both" onclick="editSelectRole(this)">
+                <div class="role-icon">🤝</div>
+                <div class="role-name">Both</div>
+                <div style="font-size:11px;color:var(--espresso-60);margin-top:4px">Creative work and a business behind it</div>
+              </div>
+              <div class="role-card" data-role="exploring" onclick="editSelectRole(this)">
+                <div class="role-icon">🌱</div>
+                <div class="role-name">Still Figuring It Out</div>
+                <div style="font-size:11px;color:var(--espresso-60);margin-top:4px">Here to explore and get inspired</div>
+              </div>
+            </div>
+
+            <div id="edit-role-fields" style="margin-bottom:24px">
+              <div id="edit-field-creative" style="display:block">
+                <label class="input-label">Your Role</label>
+                <input class="input-field" value="Photographer & Creative Director">
+              </div>
+              <div id="edit-field-biz" style="display:none">
+                <label class="input-label">Business Name</label>
+                <input class="input-field" placeholder="e.g. Studio Bloom, The Corner Shop…">
+              </div>
+              <div id="edit-field-both" style="display:none;flex-direction:column;gap:12px">
+                <div>
+                  <label class="input-label">Your Role</label>
+                  <input class="input-field" placeholder="e.g. Photographer, Brand Designer…">
+                </div>
+                <div>
+                  <label class="input-label">Business Name</label>
+                  <input class="input-field" placeholder="e.g. Studio Bloom, The Corner Shop…" style="margin-bottom:0">
+                </div>
+              </div>
+            </div>
+
+            <div style="border-top:1px solid var(--espresso-20);padding-top:20px;margin-bottom:16px">
+              <label class="input-label" style="display:block;margin-bottom:4px">Your Craft Tags</label>
+              <div style="font-size:12px;color:var(--espresso-60);margin-bottom:14px">Pick up to 5. These shape your room suggestions and resource feed.</div>
+            </div>
+
+            <div style="margin-bottom:10px">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--espresso-60);margin-bottom:8px">Creative Crafts</div>
+              <div class="tag-grid">
+                <div class="tag-select selected" onclick="editToggleTag(this)">📷 Photography</div>
+                <div class="tag-select" onclick="editToggleTag(this)">🎨 Design</div>
+                <div class="tag-select" onclick="editToggleTag(this)">✍️ Writing</div>
+                <div class="tag-select" onclick="editToggleTag(this)">🎬 Video / Film</div>
+                <div class="tag-select" onclick="editToggleTag(this)">🎙 Podcasting</div>
+                <div class="tag-select" onclick="editToggleTag(this)">🖼 Illustration</div>
+                <div class="tag-select" onclick="editToggleTag(this)">💄 Beauty / Styling</div>
+                <div class="tag-select" onclick="editToggleTag(this)">🎵 Music</div>
+                <div class="tag-select" onclick="editToggleTag(this)">🏺 Ceramics / Making</div>
+                <div class="tag-select" onclick="editToggleTag(this)">👗 Fashion</div>
+              </div>
+            </div>
+            <div style="margin-bottom:20px">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--espresso-60);margin-bottom:8px">Business & Industry</div>
+              <div class="tag-grid">
+                <div class="tag-select" onclick="editToggleTag(this)">🏪 Retail</div>
+                <div class="tag-select" onclick="editToggleTag(this)">🍽 Food & Hospitality</div>
+                <div class="tag-select" onclick="editToggleTag(this)">📣 Marketing</div>
+                <div class="tag-select" onclick="editToggleTag(this)">💼 Brand Strategy</div>
+                <div class="tag-select" onclick="editToggleTag(this)">🌿 Wellness</div>
+                <div class="tag-select" onclick="editToggleTag(this)">🏗 Architecture / Interior</div>
+                <div class="tag-select" onclick="editToggleTag(this)">💻 Tech / Product</div>
+                <div class="tag-select" onclick="editToggleTag(this)">📚 Education</div>
+              </div>
+            </div>
+
+            <div style="font-size:12px;color:var(--espresso-60);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">
+              <span><span id="edit-tag-counter" style="font-weight:700;color:var(--orange)">1</span> of 5 selected</span>
+              <span id="edit-tag-warn" style="font-size:11px;color:var(--orange);font-weight:600;display:none">Max 5 tags</span>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px">
+              <button class="btn btn-outline" onclick="showScreen('profile-view')">Cancel</button>
+              <button class="btn btn-primary">Save Changes</button>
+            </div>
+          </div>
+
+          <!-- ── SECTION: LINKS ── -->
+          <div id="edit-section-links" style="display:none">
+            <div class="page-title">Links <span class="ann">3 of 4</span></div>
+            <div class="page-sub">These show up on your profile so other members can find your work. Add whatever applies — nothing is required.</div>
+
+            <div class="form-field" style="margin-bottom:14px">
+              <label class="input-label">Website</label>
+              <div style="position:relative">
+                <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--espresso-60)">🌐</span>
+                <input class="input-field" style="padding-left:36px" placeholder="https://yoursite.com" value="https://lexiwulf.com">
+              </div>
+            </div>
+
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--espresso-60);margin:20px 0 12px">Social</div>
+
+            <div class="form-row" style="margin-bottom:14px">
+              <div>
+                <label class="input-label">Instagram</label>
+                <div style="position:relative">
+                  <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px">📸</span>
+                  <input class="input-field" style="padding-left:36px" placeholder="@handle" value="@lexiwulf">
+                </div>
+              </div>
+              <div>
+                <label class="input-label">TikTok</label>
+                <div style="position:relative">
+                  <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px">🎵</span>
+                  <input class="input-field" style="padding-left:36px" placeholder="@handle" value="@lexiwulf">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-bottom:14px">
+              <div>
+                <label class="input-label">YouTube</label>
+                <div style="position:relative">
+                  <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px">▶️</span>
+                  <input class="input-field" style="padding-left:36px" placeholder="Channel URL or handle">
+                </div>
+              </div>
+              <div>
+                <label class="input-label">LinkedIn</label>
+                <div style="position:relative">
+                  <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px">💼</span>
+                  <input class="input-field" style="padding-left:36px" placeholder="linkedin.com/in/handle">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-bottom:14px">
+              <div>
+                <label class="input-label">Pinterest</label>
+                <div style="position:relative">
+                  <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px">📌</span>
+                  <input class="input-field" style="padding-left:36px" placeholder="@handle">
+                </div>
+              </div>
+              <div>
+                <label class="input-label">Substack</label>
+                <div style="position:relative">
+                  <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px">📬</span>
+                  <input class="input-field" style="padding-left:36px" placeholder="yourname.substack.com">
+                </div>
+              </div>
+            </div>
+
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--espresso-60);margin:20px 0 12px">Creative Platforms</div>
+
+            <div class="form-row" style="margin-bottom:14px">
+              <div>
+                <label class="input-label">Behance</label>
+                <div style="position:relative">
+                  <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px">🎨</span>
+                  <input class="input-field" style="padding-left:36px" placeholder="behance.net/handle" value="behance.net/lexiwulf">
+                </div>
+              </div>
+              <div>
+                <label class="input-label">Dribbble</label>
+                <div style="position:relative">
+                  <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px">🏀</span>
+                  <input class="input-field" style="padding-left:36px" placeholder="dribbble.com/handle">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-bottom:14px">
+              <div>
+                <label class="input-label">Spotify</label>
+                <div style="position:relative">
+                  <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px">🎧</span>
+                  <input class="input-field" style="padding-left:36px" placeholder="open.spotify.com/…">
+                </div>
+              </div>
+              <div>
+                <label class="input-label">Podcast (Apple)</label>
+                <div style="position:relative">
+                  <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px">🎙</span>
+                  <input class="input-field" style="padding-left:36px" placeholder="podcasts.apple.com/…">
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:24px">
+              <button class="btn btn-outline" onclick="showScreen('profile-view')">Cancel</button>
+              <button class="btn btn-primary">Save Changes</button>
+            </div>
+          </div>
+
+          <!-- ── SECTION: PORTFOLIO ── -->
+          <div id="edit-section-portfolio" style="display:none">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">
+              <div class="page-title" style="margin-bottom:0">Portfolio <span class="ann">4 of 4</span></div>
+              <button class="btn btn-primary btn-sm" style="margin-top:4px" onclick="showPortfolioAdd()">+ Add Work</button>
+            </div>
+            <div class="page-sub">Manage the work you're showing on your profile. Each piece can link out or be a file download.</div>
+
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+
+              <div class="edit-portfolio-row">
+                <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#C94320,#8B2E10);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🕯</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:600;color:var(--espresso);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Brand Shoot — Lux Candle Co.</div>
+                  <div style="font-size:12px;color:var(--espresso-60);margin-top:2px">Link · Website</div>
+                </div>
+                <div style="display:flex;gap:8px;flex-shrink:0">
+                  <button class="btn btn-outline btn-sm">Edit</button>
+                  <button class="btn btn-sm" style="background:none;border:1px solid var(--espresso-20);color:var(--espresso-60);font-size:12px;padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer" onmouseover="this.style.borderColor='#C94320';this.style.color='#C94320'" onmouseout="this.style.borderColor='var(--espresso-20)';this.style.color='var(--espresso-60)'">✕</button>
+                </div>
+              </div>
+
+              <div class="edit-portfolio-row">
+                <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#9B9B24,#5E5E16);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📰</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:600;color:var(--espresso);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Editorial — Chicago Magazine</div>
+                  <div style="font-size:12px;color:var(--espresso-60);margin-top:2px">File · PDF Download</div>
+                </div>
+                <div style="display:flex;gap:8px;flex-shrink:0">
+                  <button class="btn btn-outline btn-sm">Edit</button>
+                  <button class="btn btn-sm" style="background:none;border:1px solid var(--espresso-20);color:var(--espresso-60);font-size:12px;padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer" onmouseover="this.style.borderColor='#C94320';this.style.color='#C94320'" onmouseout="this.style.borderColor='var(--espresso-20)';this.style.color='var(--espresso-60)'">✕</button>
+                </div>
+              </div>
+
+              <div class="edit-portfolio-row">
+                <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#6B8DB5,#3d5f87);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🎞</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:600;color:var(--espresso);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Portrait Series 2025</div>
+                  <div style="font-size:12px;color:var(--espresso-60);margin-top:2px">Link · Behance</div>
+                </div>
+                <div style="display:flex;gap:8px;flex-shrink:0">
+                  <button class="btn btn-outline btn-sm">Edit</button>
+                  <button class="btn btn-sm" style="background:none;border:1px solid var(--espresso-20);color:var(--espresso-60);font-size:12px;padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer" onmouseover="this.style.borderColor='#C94320';this.style.color='#C94320'" onmouseout="this.style.borderColor='var(--espresso-20)';this.style.color='var(--espresso-60)'">✕</button>
+                </div>
+              </div>
+
+              <div class="edit-portfolio-row">
+                <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#2D1A12,#1a0e08);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📷</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:600;color:var(--espresso);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Draft Club — Workshop Recap</div>
+                  <div style="font-size:12px;color:var(--espresso-60);margin-top:2px">Link · Gallery</div>
+                </div>
+                <div style="display:flex;gap:8px;flex-shrink:0">
+                  <button class="btn btn-outline btn-sm">Edit</button>
+                  <button class="btn btn-sm" style="background:none;border:1px solid var(--espresso-20);color:var(--espresso-60);font-size:12px;padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer" onmouseover="this.style.borderColor='#C94320';this.style.color='#C94320'" onmouseout="this.style.borderColor='var(--espresso-20)';this.style.color='var(--espresso-60)'">✕</button>
+                </div>
+              </div>
+
+              <div class="edit-portfolio-row">
+                <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#8B6B4A,#5e4530);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🌸</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:600;color:var(--espresso);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Client Work — Bloom Studio</div>
+                  <div style="font-size:12px;color:var(--espresso-60);margin-top:2px">Link · Case Study</div>
+                </div>
+                <div style="display:flex;gap:8px;flex-shrink:0">
+                  <button class="btn btn-outline btn-sm">Edit</button>
+                  <button class="btn btn-sm" style="background:none;border:1px solid var(--espresso-20);color:var(--espresso-60);font-size:12px;padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer" onmouseover="this.style.borderColor='#C94320';this.style.color='#C94320'" onmouseout="this.style.borderColor='var(--espresso-20)';this.style.color='var(--espresso-60)'">✕</button>
+                </div>
+              </div>
+
+            </div>
+
+            <div style="border:2px dashed var(--espresso-20);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;gap:10px;padding:18px;cursor:pointer;color:var(--espresso-60);margin-top:12px;transition:border-color 0.15s" onmouseover="this.style.borderColor='var(--espresso)'" onmouseout="this.style.borderColor='var(--espresso-20)'" onclick="showPortfolioAdd()">
+              <span style="font-size:18px">+</span>
+              <span style="font-size:13px;font-weight:600">Add Another Piece</span>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:24px">
+              <button class="btn btn-outline" onclick="showScreen('profile-view')">Done</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ RESOURCES ══ -->
+    <div class="page" id="page-resources">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">
+        <div class="page-title">Resources</div>
+        <button class="btn btn-outline btn-sm" style="margin-top:4px">My Library →</button>
+      </div>
+      <div class="page-sub">Everything you need to build your craft and your business — in one place.</div>
+
+      <!-- Library Tabs -->
+      <div class="interact-tabs" style="margin-bottom:0">
+        <div class="interact-tab active" id="res-tab-stack" onclick="switchResTab('stack')">
+          📚 Skill Stack
+        </div>
+        <div class="interact-tab" id="res-tab-binder" onclick="switchResTab('binder')">
+          🗂 The Binder
+        </div>
+      </div>
+
+      <!-- TAB: SKILL STACK -->
+      <div id="res-stack" style="padding-top:24px">
+        <div style="background:var(--espresso);border-radius:var(--radius);padding:18px 22px;margin-bottom:22px;display:flex;align-items:center;gap:16px">
+          <span style="font-size:28px">📚</span>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--cream);margin-bottom:3px">Skill Stack</div>
+            <div style="font-size:13px;color:rgba(240,234,224,0.6);line-height:1.5">Long-form workshops, multi-module classes, and deep-dive tutorials. These take time — and they're worth it.</div>
+          </div>
+        </div>
+
+        <div class="filter-bar" style="margin-bottom:20px">
+          <button class="filter-chip active">All</button>
+          <button class="filter-chip">Business</button>
+          <button class="filter-chip">Photography</button>
+          <button class="filter-chip">Design</button>
+          <button class="filter-chip">Writing</button>
+          <button class="filter-chip">Podcasting</button>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--espresso-60)">Sort: <strong style="color:var(--espresso);cursor:pointer">Newest ▾</strong></div>
+        </div>
+
+        <div class="card-grid card-grid-3">
+
+          <!-- Freelancer Founders — COMING SOON -->
+          <div class="resource-card" style="position:relative;overflow:hidden">
+            <div style="position:absolute;top:10px;right:10px;z-index:2;background:var(--olive);color:white;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:var(--radius-pill)">Coming Soon</div>
+            <div class="resource-thumb" style="background:linear-gradient(135deg,#2D1A12 0%,#C94320 100%)">
+              <span class="resource-type-badge badge-workshop">Workshop</span>
+              🚀
+            </div>
+            <div class="resource-body">
+              <div class="resource-title">Freelancer Founders</div>
+              <div class="resource-desc">The long-form workshop for creatives ready to run their work like a real business — systems, clients, pricing, and all of it.</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+                <span class="tag">Business</span>
+                <span class="tag">Freelance</span>
+                <span class="tag">Pricing</span>
+              </div>
+              <div class="resource-footer">
+                <div style="font-size:12px;color:var(--espresso-60);font-weight:500">Price TBD</div>
+                <button class="btn btn-outline btn-sm" disabled style="opacity:0.5;cursor:not-allowed">Notify Me</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Client Pipeline Masterclass -->
+          <div class="resource-card">
+            <div class="resource-thumb" style="background:linear-gradient(135deg,#C94320 0%,#8B2E10 100%)">
+              <span class="resource-type-badge badge-workshop">Workshop</span>
+              🎥
+            </div>
+            <div class="resource-body">
+              <div class="resource-title">Client Pipeline Masterclass</div>
+              <div class="resource-desc">6 modules on building sustainable client relationships, referrals, and repeat business.</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+                <span class="tag">Business</span>
+                <span class="tag">Clients</span>
+              </div>
+              <div class="resource-footer">
+                <div class="resource-price">$49</div>
+                <button class="btn btn-primary btn-sm">Enroll</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Start Your Podcast -->
+          <div class="resource-card">
+            <div class="resource-thumb" style="background:linear-gradient(135deg,#6B8DB5 0%,#3d5f87 100%)">
+              <span class="resource-type-badge badge-workshop">Workshop</span>
+              🎙
+            </div>
+            <div class="resource-body">
+              <div class="resource-title">Start Your Podcast (For Real)</div>
+              <div class="resource-desc">From concept to published — the no-gear-obsession approach. 4 modules, lifetime access.</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+                <span class="tag">Podcasting</span>
+                <span class="tag">Content</span>
+              </div>
+              <div class="resource-footer">
+                <div class="resource-price">$29</div>
+                <button class="btn btn-primary btn-sm">Enroll</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add New Placeholder -->
+          <div style="border:2px dashed var(--espresso-20);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:32px;cursor:pointer;color:var(--espresso-60);transition:border-color 0.15s;min-height:280px" onmouseover="this.style.borderColor='var(--espresso)'" onmouseout="this.style.borderColor='var(--espresso-20)'">
+            <span style="font-size:28px">+</span>
+            <span style="font-size:13px;font-weight:600">Add Workshop</span>
+            <span style="font-size:11px;text-align:center;line-height:1.5">Admin only — add a new Skill Stack workshop</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB: THE BINDER -->
+      <div id="res-binder" style="display:none;padding-top:24px">
+        <div style="background:var(--olive);border-radius:var(--radius);padding:18px 22px;margin-bottom:22px;display:flex;align-items:center;gap:16px">
+          <span style="font-size:28px">🗂</span>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:white;margin-bottom:3px">The Binder</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.5">One-page templates, quick guides, and downloadable tools. Grab what you need and get back to work.</div>
+          </div>
+        </div>
+
+        <div class="filter-bar" style="margin-bottom:20px">
+          <button class="filter-chip active">All</button>
+          <button class="filter-chip">Templates</button>
+          <button class="filter-chip">Guides</button>
+          <button class="filter-chip">Checklists</button>
+          <button class="filter-chip">Spreadsheets</button>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--espresso-60)">Sort: <strong style="color:var(--espresso);cursor:pointer">Newest ▾</strong></div>
+        </div>
+
+        <div class="card-grid card-grid-3">
+
+          <!-- Pricing Template -->
+          <div class="resource-card">
+            <div class="resource-thumb" style="background:linear-gradient(135deg,#9B9B24 0%,#5E5E16 100%)">
+              <span class="resource-type-badge badge-download">Template</span>
+              📊
+            </div>
+            <div class="resource-body">
+              <div class="resource-title">Pricing Your Creative Work</div>
+              <div class="resource-desc">A no-fluff spreadsheet for setting your rates with confidence. Editable Google Sheet.</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+                <span class="tag">Pricing</span>
+                <span class="tag">Spreadsheet</span>
+              </div>
+              <div class="resource-footer">
+                <div class="resource-price included">✓ Free with Member</div>
+                <button class="btn btn-outline btn-sm">Download</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- First Year Playbook -->
+          <div class="resource-card">
+            <div class="resource-thumb" style="background:linear-gradient(135deg,#6B8DB5 0%,#3d5f87 100%)">
+              <span class="resource-type-badge badge-guide">Guide</span>
+              📖
+            </div>
+            <div class="resource-body">
+              <div class="resource-title">First Year in Business Playbook</div>
+              <div class="resource-desc">What to set up first, what to ignore, and how to stay sane while building something new. PDF.</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+                <span class="tag">Business</span>
+                <span class="tag">Guide</span>
+              </div>
+              <div class="resource-footer">
+                <div class="resource-price free">Free</div>
+                <button class="btn btn-outline btn-sm">Download</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Calendar -->
+          <div class="resource-card">
+            <div class="resource-thumb" style="background:linear-gradient(135deg,#8B6B4A 0%,#5e4530 100%)">
+              <span class="resource-type-badge badge-download">Template</span>
+              🗓
+            </div>
+            <div class="resource-body">
+              <div class="resource-title">Content Calendar Template</div>
+              <div class="resource-desc">Notion template for planning your content batch, social schedule, and launch cadence.</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+                <span class="tag">Content</span>
+                <span class="tag">Notion</span>
+              </div>
+              <div class="resource-footer">
+                <div class="resource-price included">✓ Free with Member</div>
+                <button class="btn btn-outline btn-sm">Download</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lighting Guide -->
+          <div class="resource-card">
+            <div class="resource-thumb" style="background:linear-gradient(135deg,#C94320 0%,#6B8DB5 100%)">
+              <span class="resource-type-badge badge-guide">Guide</span>
+              💡
+            </div>
+            <div class="resource-body">
+              <div class="resource-title">Photography Lighting on a Budget</div>
+              <div class="resource-desc">Studio-quality setups under $200. PDF with diagrams and gear recommendations.</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+                <span class="tag">Photography</span>
+                <span class="tag">Gear</span>
+              </div>
+              <div class="resource-footer">
+                <div class="resource-price free">Free</div>
+                <button class="btn btn-outline btn-sm">Download</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add New Placeholder -->
+          <div style="border:2px dashed var(--espresso-20);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:32px;cursor:pointer;color:var(--espresso-60);transition:border-color 0.15s;min-height:280px" onmouseover="this.style.borderColor='var(--espresso)'" onmouseout="this.style.borderColor='var(--espresso-20)'">
+            <span style="font-size:28px">+</span>
+            <span style="font-size:13px;font-weight:600">Add Resource</span>
+            <span style="font-size:11px;text-align:center;line-height:1.5">Admin only — add a new Binder resource</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ INTERACT — EVENTS (Creative Pour) ══ -->
+    <div class="page" id="page-interact-events">
+      <div class="page-title">Interact</div>
+      <div class="page-sub">IRL events, virtual hangouts, and the Draft Club podcast.</div>
+
+      <div class="interact-tabs">
+        <div class="interact-tab active" onclick="showScreen('interact-events')">✦ Creative Pour</div>
+        <div class="interact-tab" onclick="showScreen('interact-podcast')">🎙 Podcast</div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div style="display:flex;gap:8px">
+          <button class="filter-chip active">All</button>
+          <button class="filter-chip">Near Me</button>
+          <button class="filter-chip">In-Person</button>
+          <button class="filter-chip">Virtual</button>
+        </div>
+        <div style="font-size:13px;color:var(--espresso-60)">📍 Chicago, IL</div>
+      </div>
+
+      <!-- Admin note banner -->
+      <div style="background:rgba(107,141,181,0.1);border:1px dashed var(--blue);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:20px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:14px">🔗</span>
+        <div style="font-size:12px;color:#3d6494;line-height:1.5"><strong>Admin note:</strong> Each event card supports an external event URL (Posh, Pie, Eventbrite, etc.) that opens in a new tab, alongside in-app RSVP tracking. Both are stored per event.</div>
+      </div>
+
+      <div style="font-size:13px;font-weight:700;color:var(--espresso-60);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">Near You</div>
+      <div class="events-grid" style="margin-bottom:28px">
+
+        <div class="event-card" style="cursor:pointer" onclick="showEventDetail('portfolio-reviews')">
+          <div class="event-card-header" style="background:linear-gradient(135deg,#C94320,#8B2E10)">
+            <div class="event-card-date"><div class="month">May</div><div class="day">23</div></div>
+            <div style="margin-left:auto;background:rgba(255,255,255,0.15);backdrop-filter:blur(4px);border-radius:var(--radius-pill);padding:3px 9px;font-size:10px;font-weight:700;color:white;letter-spacing:0.04em">Creative Pour</div>
+          </div>
+          <div class="event-card-body">
+            <div class="event-card-title">Portfolio Reviews IRL</div>
+            <div class="event-card-meta"><span>📍 Chicago</span><span>⏱ 11AM–2PM</span><span>🎟 12 spots left</span></div>
+            <div class="event-card-host"><div class="event-host-avatar">LW</div><div class="event-host-name">Hosted by Lexi Wulf</div></div>
+            <div style="margin-top:12px"><button class="btn btn-primary btn-sm" style="width:100%;justify-content:center">View Details →</button></div>
+          </div>
+        </div>
+
+        <div class="event-card" style="cursor:pointer" onclick="showEventDetail('happy-hour')">
+          <div class="event-card-header" style="background:linear-gradient(135deg,#9B9B24,#5E5E16)">
+            <div class="event-card-date"><div class="month">Jun</div><div class="day">07</div></div>
+            <div style="margin-left:auto;background:rgba(255,255,255,0.15);backdrop-filter:blur(4px);border-radius:var(--radius-pill);padding:3px 9px;font-size:10px;font-weight:700;color:white;letter-spacing:0.04em">Creative Pour</div>
+          </div>
+          <div class="event-card-body">
+            <div class="event-card-title">Creative Biz Happy Hour</div>
+            <div class="event-card-meta"><span>📍 Chicago</span><span>⏱ 6–9PM</span><span>🎟 Open</span></div>
+            <div class="event-card-host"><div class="event-host-avatar" style="background:var(--blue)">SA</div><div class="event-host-name">Hosted by Simone Adeyemi</div></div>
+            <div style="margin-top:12px"><button class="btn btn-primary btn-sm" style="width:100%;justify-content:center">View Details →</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:13px;font-weight:700;color:var(--espresso-60);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">All Upcoming</div>
+      <div class="events-grid">
+        <div class="event-card" style="cursor:pointer" onclick="showEventDetail('pricing-workshop')">
+          <div class="event-card-header" style="background:linear-gradient(135deg,#6B8DB5,#3d5f87)">
+            <div class="event-card-date"><div class="month">Jun</div><div class="day">14</div></div>
+            <div style="margin-left:auto;background:rgba(255,255,255,0.15);backdrop-filter:blur(4px);border-radius:var(--radius-pill);padding:3px 9px;font-size:10px;font-weight:700;color:white;letter-spacing:0.04em">Virtual</div>
+          </div>
+          <div class="event-card-body">
+            <div class="event-card-title">Pricing Workshop (Virtual)</div>
+            <div class="event-card-meta"><span>💻 Virtual</span><span>⏱ 2–4PM CT</span><span>🎟 Open</span></div>
+            <div class="event-card-host"><div class="event-host-avatar" style="background:var(--olive)">LW</div><div class="event-host-name">Hosted by Lexi Wulf</div></div>
+            <div style="margin-top:12px"><button class="btn btn-primary btn-sm" style="width:100%;justify-content:center">View Details →</button></div>
+          </div>
+        </div>
+
+        <div class="event-card" style="cursor:pointer" onclick="showEventDetail('nyc-meetup')">
+          <div class="event-card-header" style="background:linear-gradient(135deg,#2D1A12,#1a0e08)">
+            <div class="event-card-date"><div class="month">Jun</div><div class="day">28</div></div>
+            <div style="margin-left:auto;background:rgba(255,255,255,0.15);backdrop-filter:blur(4px);border-radius:var(--radius-pill);padding:3px 9px;font-size:10px;font-weight:700;color:white;letter-spacing:0.04em">Creative Pour</div>
+          </div>
+          <div class="event-card-body">
+            <div class="event-card-title">Draft Club Summer Meetup — NYC</div>
+            <div class="event-card-meta"><span>📍 New York</span><span>⏱ 5–8PM</span><span>🎟 20 spots</span></div>
+            <div class="event-card-host"><div class="event-host-avatar" style="background:var(--orange)">MR</div><div class="event-host-name">Hosted by Maya Rodriguez</div></div>
+            <div style="margin-top:12px"><button class="btn btn-primary btn-sm" style="width:100%;justify-content:center">View Details →</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── EVENT DETAIL OVERLAY ── -->
+      <div id="event-detail-overlay" onclick="hideEventDetail(event)" style="display:none;position:fixed;inset:0;background:rgba(45,26,18,0.55);z-index:500;align-items:flex-start;justify-content:center;padding:60px 20px;overflow-y:auto">
+        <div onclick="event.stopPropagation()" style="background:var(--white);border-radius:var(--radius-lg);max-width:560px;width:100%;overflow:hidden;box-shadow:0 24px 64px rgba(45,26,18,0.2)">
+
+          <!-- Header image area -->
+          <div id="event-detail-header" style="height:160px;background:linear-gradient(135deg,#C94320,#8B2E10);display:flex;align-items:flex-end;padding:20px;position:relative">
+            <div style="background:white;border-radius:var(--radius-sm);padding:8px 14px;text-align:center;min-width:52px">
+              <div id="ev-month" style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--orange)">May</div>
+              <div id="ev-day" style="font-size:26px;font-weight:700;color:var(--espresso);line-height:1">23</div>
+            </div>
+            <button onclick="hideEventDetail(event)" style="position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.2);border:none;color:white;font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+          </div>
+
+          <div style="padding:28px">
+            <div id="ev-badge" style="display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(201,67,32,0.1);color:var(--orange);padding:3px 10px;border-radius:var(--radius-pill);margin-bottom:10px">Creative Pour</div>
+            <div id="ev-title" style="font-size:22px;font-weight:700;color:var(--espresso);margin-bottom:12px">Portfolio Reviews IRL</div>
+
+            <!-- Meta strip -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
+              <div style="background:var(--espresso-10);border-radius:var(--radius-sm);padding:10px 14px">
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--espresso-60);margin-bottom:3px">Date & Time</div>
+                <div id="ev-datetime" style="font-size:13px;font-weight:600;color:var(--espresso)">May 23 · 11AM–2PM CT</div>
+              </div>
+              <div style="background:var(--espresso-10);border-radius:var(--radius-sm);padding:10px 14px">
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--espresso-60);margin-bottom:3px">Location</div>
+                <div id="ev-location" style="font-size:13px;font-weight:600;color:var(--espresso)">Chicago, IL</div>
+              </div>
+              <div style="background:var(--espresso-10);border-radius:var(--radius-sm);padding:10px 14px">
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--espresso-60);margin-bottom:3px">Host</div>
+                <div style="display:flex;align-items:center;gap:6px;margin-top:2px">
+                  <div id="ev-host-av" style="width:22px;height:22px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white">LW</div>
+                  <div id="ev-host" style="font-size:13px;font-weight:600;color:var(--espresso)">Lexi Wulf</div>
+                </div>
+              </div>
+              <div style="background:var(--espresso-10);border-radius:var(--radius-sm);padding:10px 14px">
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--espresso-60);margin-bottom:3px">Availability</div>
+                <div id="ev-spots" style="font-size:13px;font-weight:600;color:var(--espresso)">12 spots left</div>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div id="ev-desc" style="font-size:14px;color:var(--espresso-60);line-height:1.65;margin-bottom:24px">
+              Bring a project you've been sitting on — or one you just wrapped. We'll spend the afternoon giving and getting honest, useful portfolio feedback in a small group setting. Coffee's on us. Judgment is not.
+            </div>
+
+            <!-- RSVP CTA — single button, routes through third-party -->
+            <div style="background:var(--espresso-10);border-radius:var(--radius);padding:16px;margin-bottom:16px">
+              <div style="font-size:12px;color:var(--espresso-60);margin-bottom:12px;line-height:1.5">
+                RSVPs are managed through <strong id="ev-platform" style="color:var(--espresso)">Posh</strong>. Clicking below will open the event page and register your spot there — we'll sync your response back to Draft Club automatically.
+              </div>
+              <button class="btn btn-orange" style="width:100%;justify-content:center;font-size:15px;padding:13px" onclick="handleEventRsvp()">
+                RSVP → Opens on <span id="ev-platform-btn">Posh</span>
+              </button>
+            </div>
+
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-outline btn-sm" style="flex:1;justify-content:center">📎 Add to Calendar</button>
+              <button class="btn btn-outline btn-sm" style="flex:1;justify-content:center">Share Event</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RSVP CONFIRMED STATE (shown after returning from third-party) ── -->
+      <div id="rsvp-confirmed" onclick="hideRsvpModal(event)" style="display:none;position:fixed;inset:0;background:rgba(45,26,18,0.55);z-index:600;align-items:center;justify-content:center">
+        <div onclick="event.stopPropagation()" style="background:var(--white);border-radius:var(--radius-lg);padding:36px;max-width:400px;width:90%;text-align:center;box-shadow:0 24px 64px rgba(45,26,18,0.2)">
+          <div style="font-size:44px;margin-bottom:14px">🎉</div>
+          <div style="font-size:20px;font-weight:700;color:var(--espresso);margin-bottom:6px">You're in.</div>
+          <div style="font-size:14px;color:var(--espresso-60);line-height:1.65;margin-bottom:20px">Your RSVP on Posh was confirmed and synced to Draft Club. We'll see you there.</div>
+          <div style="background:var(--espresso-10);border-radius:var(--radius-sm);padding:12px 16px;text-align:left;margin-bottom:20px">
+            <div style="font-size:13px;font-weight:600;color:var(--espresso)">Portfolio Reviews IRL</div>
+            <div style="font-size:12px;color:var(--espresso-60);margin-top:3px">May 23 · 11AM–2PM · Chicago, IL</div>
+          </div>
+          <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-bottom:8px">📎 Add to Calendar (.ics)</button>
+          <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="hideRsvpConfirmed()">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ INTERACT — PODCAST ══ -->
+    <div class="page" id="page-interact-podcast">
+      <div class="page-title">Interact</div>
+      <div class="page-sub">IRL events, virtual hangouts, and the Draft Club podcast.</div>
+
+      <div class="interact-tabs">
+        <div class="interact-tab" onclick="showScreen('interact-events')">✦ Creative Pour</div>
+        <div class="interact-tab active" onclick="showScreen('interact-podcast')">🎙 Podcast</div>
+      </div>
+
+      <!-- Show header -->
+      <div class="podcast-header">
+        <div class="podcast-cover">🎙</div>
+        <div style="flex:1">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(240,234,224,0.5);margin-bottom:4px">Now Playing</div>
+          <div class="podcast-show-name">Draft Club Podcast</div>
+          <div class="podcast-show-desc">Honest conversations about building a creative business — the real process, not the highlight reel. New episodes every other Tuesday.</div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <div class="podcast-listen-links">
+              <div class="listen-btn">🎵 Spotify</div>
+              <div class="listen-btn">🎧 Apple Podcasts</div>
+              <div class="listen-btn">▶ YouTube</div>
+              <div class="listen-btn">✉ Substack</div>
+            </div>
+          </div>
+        </div>
+        <!-- Preferred platform picker -->
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:14px;min-width:170px;flex-shrink:0">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(240,234,224,0.45);margin-bottom:10px">Your platform</div>
+          <div id="platform-list" style="display:flex;flex-direction:column;gap:6px">
+            <div class="platform-opt selected" onclick="selectPlatform(this)" data-platform="spotify"  style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-sm);background:rgba(201,67,32,0.25);border:1px solid rgba(201,67,32,0.4);cursor:pointer">
+              <span style="font-size:14px">🎵</span><span style="font-size:12px;font-weight:600;color:var(--cream)">Spotify</span>
+              <span style="margin-left:auto;font-size:10px;color:var(--orange)">✓</span>
+            </div>
+            <div class="platform-opt" onclick="selectPlatform(this)" data-platform="apple" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-sm);background:transparent;border:1px solid rgba(255,255,255,0.08);cursor:pointer">
+              <span style="font-size:14px">🎧</span><span style="font-size:12px;font-weight:500;color:rgba(240,234,224,0.65)">Apple Podcasts</span>
+            </div>
+            <div class="platform-opt" onclick="selectPlatform(this)" data-platform="youtube" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-sm);background:transparent;border:1px solid rgba(255,255,255,0.08);cursor:pointer">
+              <span style="font-size:14px">▶</span><span style="font-size:12px;font-weight:500;color:rgba(240,234,224,0.65)">YouTube</span>
+            </div>
+            <div class="platform-opt" onclick="selectPlatform(this)" data-platform="substack" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-sm);background:transparent;border:1px solid rgba(255,255,255,0.08);cursor:pointer">
+              <span style="font-size:14px">✉</span><span style="font-size:12px;font-weight:500;color:rgba(240,234,224,0.65)">Substack</span>
+            </div>
+          </div>
+          <div style="font-size:10px;color:rgba(240,234,224,0.3);margin-top:8px;line-height:1.4">Episode links will open in your preferred app</div>
+        </div>
+      </div>
+
+      <!-- Episode list -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <h3 style="margin:0">All Episodes</h3>
+        <div style="font-size:13px;color:var(--espresso-60)">47 episodes</div>
+      </div>
+
+      <div class="episode-list">
+
+        <div class="episode-item">
+          <div class="episode-num">47</div>
+          <div class="episode-info">
+            <div class="episode-title">When to Say No to Clients</div>
+            <div class="episode-guest">Guest: Jordan Brooks, Brand Strategist</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div class="episode-date">May 15</div>
+            <div class="episode-duration">38 min</div>
+          </div>
+          <!-- Per-episode platform links -->
+          <div style="display:flex;gap:5px;flex-shrink:0">
+            <a title="Listen on Spotify"  style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">🎵</a>
+            <a title="Listen on Apple"    style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">🎧</a>
+            <a title="Watch on YouTube"   style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">▶</a>
+          </div>
+        </div>
+
+        <div class="episode-item">
+          <div class="episode-num">46</div>
+          <div class="episode-info">
+            <div class="episode-title">Building in Public Without Burning Out</div>
+            <div class="episode-guest">Guest: Priya Watts, Product Designer</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div class="episode-date">May 1</div>
+            <div class="episode-duration">44 min</div>
+          </div>
+          <div style="display:flex;gap:5px;flex-shrink:0">
+            <a title="Listen on Spotify"  style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">🎵</a>
+            <a title="Listen on Apple"    style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">🎧</a>
+            <a title="Watch on YouTube"   style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">▶</a>
+          </div>
+        </div>
+
+        <div class="episode-item">
+          <div class="episode-num">45</div>
+          <div class="episode-info">
+            <div class="episode-title">The First Year: What Nobody Told Me</div>
+            <div class="episode-guest">Solo episode · Lexi Wulf</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div class="episode-date">Apr 17</div>
+            <div class="episode-duration">29 min</div>
+          </div>
+          <div style="display:flex;gap:5px;flex-shrink:0">
+            <a title="Listen on Spotify"  style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">🎵</a>
+            <a title="Listen on Apple"    style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">🎧</a>
+            <a title="Watch on YouTube"   style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">▶</a>
+          </div>
+        </div>
+
+        <div class="episode-item">
+          <div class="episode-num">44</div>
+          <div class="episode-info">
+            <div class="episode-title">Pricing Your Work Without Apologizing</div>
+            <div class="episode-guest">Guest: Simone Adeyemi, Photographer</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div class="episode-date">Apr 3</div>
+            <div class="episode-duration">51 min</div>
+          </div>
+          <div style="display:flex;gap:5px;flex-shrink:0">
+            <a title="Listen on Spotify"  style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">🎵</a>
+            <a title="Listen on Apple"    style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">🎧</a>
+            <a title="Watch on YouTube"   style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">▶</a>
+          </div>
+        </div>
+
+        <div class="episode-item">
+          <div class="episode-num">43</div>
+          <div class="episode-info">
+            <div class="episode-title">Collab or Compete? Industry Friendships Explained</div>
+            <div class="episode-guest">Guest: Theo Kim, Photographer & Educator</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div class="episode-date">Mar 20</div>
+            <div class="episode-duration">42 min</div>
+          </div>
+          <div style="display:flex;gap:5px;flex-shrink:0">
+            <a title="Listen on Spotify"  style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">🎵</a>
+            <a title="Listen on Apple"    style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">🎧</a>
+            <a title="Watch on YouTube"   style="width:28px;height:28px;background:var(--espresso-10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;text-decoration:none;border:1px solid var(--espresso-20)" onmouseover="this.style.background='var(--espresso-20)'" onmouseout="this.style.background='var(--espresso-10)'">▶</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app-shell -->
+
+<!-- ══════════════════════════════════════════ -->
+<!--  ONBOARDING (full-page, no sidebar)       -->
+<!-- ══════════════════════════════════════════ -->
+<div style="display:none;margin-top:50px" id="page-onboarding">
+  <div class="onboarding-shell">
+
+    <!-- STEP 1: Account Setup -->
+    <div class="onboarding-card" id="ob-step-1">
+      <div class="onboarding-logo">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="logo-mark" style="background:var(--espresso)"><span style="background:var(--cream)"></span><span style="background:var(--cream)"></span><span style="background:var(--cream)"></span></div>
+          <span style="font-size:18px;font-weight:700;color:var(--espresso)">draft club</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+      <div class="step-label">Step 1 of 5</div>
+      <div class="step-title">Create your account.</div>
+      <div class="step-sub">You're joining something good. Let's get you set up — it takes about 2 minutes.</div>
+      <div id="signup-form">
+        <div class="form-row" style="margin-bottom:0">
+          <div class="form-field">
+            <label class="input-label">Display Name</label>
+            <input class="input-field" placeholder="Lexi Wulf" value="Lexi Wulf">
+          </div>
+          <div class="form-field">
+            <label class="input-label">Username</label>
+            <div style="position:relative">
+              <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--espresso-60);font-weight:500">@</span>
+              <input class="input-field" style="padding-left:26px" placeholder="lexiwulf" value="lexiwulf">
+            </div>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="input-label">Email Address</label>
+          <input class="input-field" placeholder="you@example.com" value="lexi@draftclub.co">
+        </div>
+        <div class="form-field" style="margin-bottom:28px">
+          <label class="input-label">Password</label>
+          <input class="input-field" type="password" placeholder="At least 8 characters" value="••••••••••">
+        </div>
+        <div class="onboarding-actions">
+          <div style="font-size:12px;color:var(--espresso-60)">Already a member? <span style="color:var(--orange);cursor:pointer;font-weight:600" onclick="showSignIn()">Sign in →</span></div>
+          <button class="btn btn-primary" onclick="obGoTo(2)">Continue →</button>
+        </div>
+        <div style="margin-top:16px;font-size:11px;color:var(--espresso-60);text-align:center;line-height:1.6">
+          By continuing you agree to our <span style="color:var(--espresso);font-weight:600;cursor:pointer">Terms of Service</span> and <span style="color:var(--espresso);font-weight:600;cursor:pointer">Privacy Policy</span>.
+        </div>
+      </div>
+
+      <!-- SIGN IN STATE (toggled) -->
+      <div id="signin-form" style="display:none">
+        <div style="font-size:13px;color:var(--espresso-60);margin-bottom:20px">Welcome back. Pick up right where you left off.</div>
+        <div class="form-field">
+          <label class="input-label">Email Address</label>
+          <input class="input-field" placeholder="you@example.com">
+        </div>
+        <div class="form-field" style="margin-bottom:8px">
+          <label class="input-label">Password</label>
+          <input class="input-field" type="password" placeholder="••••••••">
+        </div>
+        <div style="text-align:right;margin-bottom:28px">
+          <span style="font-size:12px;color:var(--orange);cursor:pointer;font-weight:600">Forgot password?</span>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:16px">Sign In</button>
+        <div style="text-align:center;font-size:12px;color:var(--espresso-60)">
+          Don't have an account? <span style="color:var(--orange);cursor:pointer;font-weight:600" onclick="showSignUp()">Create one →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Role -->
+    <div class="onboarding-card" id="ob-step-2" style="display:none">
+      <div class="onboarding-logo">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="logo-mark" style="background:var(--espresso)"><span style="background:var(--cream)"></span><span style="background:var(--cream)"></span><span style="background:var(--cream)"></span></div>
+          <span style="font-size:18px;font-weight:700;color:var(--espresso)">draft club</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+      <div class="step-label">Step 2 of 5</div>
+      <div class="step-title">What best describes you?</div>
+      <div class="step-sub">Pick one. You can always update this later — this just helps us put you in the right rooms first.</div>
+      <div class="role-grid">
+        <div class="role-card selected" data-role="creative" onclick="selectRole(this)">
+          <div class="role-icon">🎨</div>
+          <div class="role-name">Creative</div>
+          <div style="font-size:11px;color:var(--espresso-60);margin-top:4px">Photographer, designer, writer, maker</div>
+        </div>
+        <div class="role-card" data-role="biz" onclick="selectRole(this)">
+          <div class="role-icon">🏪</div>
+          <div class="role-name">Small Biz Owner</div>
+          <div style="font-size:11px;color:var(--espresso-60);margin-top:4px">Running a shop, studio, or service</div>
+        </div>
+        <div class="role-card" data-role="both" onclick="selectRole(this)">
+          <div class="role-icon">🤝</div>
+          <div class="role-name">Both</div>
+          <div style="font-size:11px;color:var(--espresso-60);margin-top:4px">Creative work and a business behind it</div>
+        </div>
+        <div class="role-card" data-role="exploring" onclick="selectRole(this)">
+          <div class="role-icon">🌱</div>
+          <div class="role-name">Still Figuring It Out</div>
+          <div style="font-size:11px;color:var(--espresso-60);margin-top:4px">Here to explore and get inspired</div>
+        </div>
+      </div>
+
+      <!-- Conditional detail fields -->
+      <div id="role-fields" style="margin-bottom:24px">
+        <div id="field-creative" style="display:block">
+          <label class="input-label">Role</label>
+          <input class="input-field" placeholder="e.g. Photographer, Brand Designer, Copywriter…" style="margin-bottom:0">
+        </div>
+        <div id="field-biz" style="display:none">
+          <label class="input-label">Business Name</label>
+          <input class="input-field" placeholder="e.g. Studio Bloom, The Corner Shop…" style="margin-bottom:0">
+        </div>
+        <div id="field-both" style="display:none;display:flex;flex-direction:column;gap:12px">
+          <div>
+            <label class="input-label">Role</label>
+            <input class="input-field" placeholder="e.g. Photographer, Brand Designer, Copywriter…">
+          </div>
+          <div>
+            <label class="input-label">Business Name</label>
+            <input class="input-field" placeholder="e.g. Studio Bloom, The Corner Shop…" style="margin-bottom:0">
+          </div>
+        </div>
+      </div>
+
+      <div class="onboarding-actions">
+        <button class="btn btn-outline btn-sm" onclick="obGoTo(1)">← Back</button>
+        <button class="btn btn-primary" onclick="obGoTo(3)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Industry / Craft Tags -->
+    <div class="onboarding-card" id="ob-step-3" style="display:none">
+      <div class="onboarding-logo">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="logo-mark" style="background:var(--espresso)"><span style="background:var(--cream)"></span><span style="background:var(--cream)"></span><span style="background:var(--cream)"></span></div>
+          <span style="font-size:18px;font-weight:700;color:var(--espresso)">draft club</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+      <div class="step-label">Step 3 of 5</div>
+      <div class="step-title">What's your craft?</div>
+      <div class="step-sub">Pick up to 5. This shapes your room suggestions and the resources that show up for you. You can always update these from your profile.</div>
+
+      <div style="margin-bottom:10px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--espresso-60);margin-bottom:8px">Creative Crafts</div>
+        <div class="tag-grid">
+          <div class="tag-select selected" onclick="toggleTag(this)">📷 Photography</div>
+          <div class="tag-select" onclick="toggleTag(this)">🎨 Design</div>
+          <div class="tag-select" onclick="toggleTag(this)">✍️ Writing</div>
+          <div class="tag-select" onclick="toggleTag(this)">🎬 Video / Film</div>
+          <div class="tag-select" onclick="toggleTag(this)">🎙 Podcasting</div>
+          <div class="tag-select" onclick="toggleTag(this)">🖼 Illustration</div>
+          <div class="tag-select" onclick="toggleTag(this)">💄 Beauty / Styling</div>
+          <div class="tag-select" onclick="toggleTag(this)">🎵 Music</div>
+          <div class="tag-select" onclick="toggleTag(this)">🏺 Ceramics / Making</div>
+          <div class="tag-select" onclick="toggleTag(this)">👗 Fashion</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:28px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--espresso-60);margin-bottom:8px">Business & Industry</div>
+        <div class="tag-grid">
+          <div class="tag-select" onclick="toggleTag(this)">🏪 Retail</div>
+          <div class="tag-select" onclick="toggleTag(this)">🍽 Food & Hospitality</div>
+          <div class="tag-select" onclick="toggleTag(this)">📣 Marketing</div>
+          <div class="tag-select" onclick="toggleTag(this)">💼 Brand Strategy</div>
+          <div class="tag-select" onclick="toggleTag(this)">🌿 Wellness</div>
+          <div class="tag-select" onclick="toggleTag(this)">🏗 Architecture / Interior</div>
+          <div class="tag-select" onclick="toggleTag(this)">💻 Tech / Product</div>
+          <div class="tag-select" onclick="toggleTag(this)">📚 Education</div>
+        </div>
+      </div>
+
+      <div style="font-size:12px;color:var(--espresso-60);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">
+        <span><span id="tag-counter" style="font-weight:700;color:var(--orange)">1</span> of 5 selected <span style="color:var(--espresso-60)">(at least 1 required, max 5)</span></span>
+        <span id="tag-min-warn" style="font-size:11px;color:var(--orange);font-weight:600;display:none">Pick at least one to continue</span>
+      </div>
+
+      <div class="onboarding-actions">
+        <button class="btn btn-outline btn-sm" onclick="obGoTo(2)">← Back</button>
+        <button class="btn btn-primary" onclick="ob3Continue()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Location -->
+    <div class="onboarding-card" id="ob-step-4" style="display:none">
+      <div class="onboarding-logo">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="logo-mark" style="background:var(--espresso)"><span style="background:var(--cream)"></span><span style="background:var(--cream)"></span><span style="background:var(--cream)"></span></div>
+          <span style="font-size:18px;font-weight:700;color:var(--espresso)">draft club</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+      <div class="step-label">Step 4 of 5</div>
+      <div class="step-title">Where are you based?</div>
+      <div class="step-sub">We use this to surface Creative Pour events happening near you. Your exact location is never shared — just your city.</div>
+
+      <div class="form-field" style="margin-bottom:16px">
+        <label class="input-label">City</label>
+        <input class="input-field" placeholder="e.g. Chicago, IL" value="Chicago, IL">
+      </div>
+
+      <div style="background:var(--espresso-10);border-radius:var(--radius);padding:16px;margin-bottom:28px">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:18px;margin-top:1px">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--espresso);margin-bottom:3px">Events are starting in Chicago</div>
+            <div style="font-size:12px;color:var(--espresso-60);line-height:1.55">Draft Club launched with IRL events in Chicago. As the community grows, Creative Pour events will expand to your city — and eventually you'll be able to host your own.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;padding:14px;background:var(--white);border:1.5px solid var(--espresso-20);border-radius:var(--radius);margin-bottom:28px;cursor:pointer">
+        <span style="font-size:18px">🌎</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;color:var(--espresso)">Use my current location</div>
+          <div style="font-size:11px;color:var(--espresso-60)">We'll detect your city automatically</div>
+        </div>
+        <span style="font-size:12px;color:var(--orange);font-weight:600">Allow →</span>
+      </div>
+
+      <div class="onboarding-actions">
+        <button class="btn btn-outline btn-sm" onclick="obGoTo(3)">← Back</button>
+        <button class="btn btn-primary" onclick="obGoTo(5)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Choose Plan -->
+    <div class="onboarding-card" id="ob-step-5" style="display:none;max-width:600px">
+      <div class="onboarding-logo">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="logo-mark" style="background:var(--espresso)"><span style="background:var(--cream)"></span><span style="background:var(--cream)"></span><span style="background:var(--cream)"></span></div>
+          <span style="font-size:18px;font-weight:700;color:var(--espresso)">draft club</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+      <div class="step-label">Step 5 of 5 — Last one!</div>
+      <div class="step-title">Pick your seat.</div>
+      <div class="step-sub">You can start free and upgrade anytime. No pressure, no tricks.</div>
+
+      <div class="plan-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:8px">
+
+        <!-- FREE -->
+        <div class="plan-card" onclick="selectPlan(this)" id="plan-free">
+          <div class="plan-name">Free</div>
+          <div class="plan-price">$0<span>/mo</span></div>
+          <div class="plan-feature">
+            ✓ 3 chat rooms<br>
+            ✓ Basic profile<br>
+            ✓ 3 portfolio items<br>
+            ✓ Free resources<br>
+            ✓ Event waitlist<br>
+            ○ Full room access<br>
+            ○ Skill Stack & Binder<br>
+          </div>
+        </div>
+
+        <!-- MEMBER -->
+        <div class="plan-card popular selected" onclick="selectPlan(this)" id="plan-member">
+          <div class="plan-popular-label">✦ Most Popular</div>
+          <div class="plan-name">Member</div>
+          <div class="plan-price">$12<span>/mo</span></div>
+          <div class="plan-feature">
+            ✓ Unlimited rooms<br>
+            ✓ Full profile + 20 items<br>
+            ✓ Priority event RSVP<br>
+            ✓ Discounted resources<br>
+            ✓ Skill Stack access<br>
+            ✓ Binder downloads<br>
+            ○ Pro-only rooms<br>
+          </div>
+        </div>
+
+        <!-- PRO -->
+        <div class="plan-card" onclick="selectPlan(this)" id="plan-pro">
+          <div class="plan-name">Pro</div>
+          <div class="plan-price">$29<span>/mo</span></div>
+          <div class="plan-feature">
+            ✓ Everything in Member<br>
+            ✓ Unlimited portfolio<br>
+            ✓ Pro-only rooms<br>
+            ✓ Full resource library<br>
+            ✓ Guest event RSVPs<br>
+            ✓ Early feature access<br>
+            ✓ Podcast bonus content<br>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="font-size:11px;color:var(--espresso-60);text-align:center;margin-bottom:24px">
+        All paid plans billed monthly · Cancel anytime · No contracts
+      </div>
+
+      <!-- Payment fields — shown when paid plan selected -->
+      <div id="payment-fields" style="background:var(--espresso-10);border-radius:var(--radius);padding:16px;margin-bottom:24px">
+        <div style="font-size:13px;font-weight:700;color:var(--espresso);margin-bottom:12px">Payment Details <span style="font-size:11px;font-weight:400;color:var(--espresso-60)">— secured by Stripe</span></div>
+        <div class="form-field">
+          <label class="input-label">Card Number</label>
+          <input class="input-field" placeholder="1234 5678 9012 3456">
+        </div>
+        <div class="form-row" style="margin-bottom:0">
+          <div>
+            <label class="input-label">Expiry</label>
+            <input class="input-field" placeholder="MM / YY">
+          </div>
+          <div>
+            <label class="input-label">CVC</label>
+            <input class="input-field" placeholder="•••">
+          </div>
+        </div>
+      </div>
+
+      <div class="onboarding-actions">
+        <button class="btn btn-outline btn-sm" onclick="obGoTo(4)">← Back</button>
+        <button class="btn btn-orange" onclick="obComplete()" style="font-size:14px;padding:11px 24px">Join Draft Club →</button>
+      </div>
+    </div>
+
+    <!-- WELCOME STATE (post-signup) -->
+    <div class="onboarding-card" id="ob-welcome" style="display:none;text-align:center">
+      <div style="font-size:52px;margin-bottom:16px">☕</div>
+      <div style="font-size:28px;font-weight:700;color:var(--espresso);margin-bottom:8px">You're in.</div>
+      <div style="font-size:15px;color:var(--espresso-60);margin-bottom:28px;line-height:1.6">Welcome to Draft Club, Lexi.<br>Your seat is ready. Let's show you around.</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;text-align:left">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--espresso-10);border-radius:var(--radius-sm)">
+          <span style="font-size:20px">💬</span>
+          <div><div style="font-size:13px;font-weight:600;color:var(--espresso)">Your rooms are waiting</div><div style="font-size:12px;color:var(--espresso-60)">We've added you to 3 rooms based on your craft</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--espresso-10);border-radius:var(--radius-sm)">
+          <span style="font-size:20px">🗂</span>
+          <div><div style="font-size:13px;font-weight:600;color:var(--espresso)">Build your profile</div><div style="font-size:12px;color:var(--espresso-60)">Add your portfolio, bio, and links when you're ready</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--espresso-10);border-radius:var(--radius-sm)">
+          <span style="font-size:20px">✦</span>
+          <div><div style="font-size:13px;font-weight:600;color:var(--espresso)">Creative Pour events near you</div><div style="font-size:12px;color:var(--espresso-60)">Portfolio Reviews IRL — Chicago · May 23</div></div>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:15px;padding:12px" onclick="showScreen('home')">Take me in →</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const screens = {
+    'home':             { shell: true,  page: 'page-home',             nav: 'nav-home' },
+    'rooms':            { shell: true,  page: 'page-rooms',            nav: 'nav-rooms' },
+    'profile-view':     { shell: true,  page: 'page-profile-view',     nav: 'nav-profile' },
+    'profile-edit':     { shell: true,  page: 'page-profile-edit',     nav: 'nav-profile' },
+    'resources':        { shell: true,  page: 'page-resources',        nav: 'nav-resources' },
+    'interact-events':  { shell: true,  page: 'page-interact-events',  nav: 'nav-interact' },
+    'interact-podcast': { shell: true,  page: 'page-interact-podcast', nav: 'nav-interact' },
+    'onboarding':       { shell: false, page: 'page-onboarding',       nav: null },
+  };
+
+  function showScreen(name) {
+    const s = screens[name];
+    if (!s) return;
+
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('visible'));
+    document.getElementById('page-onboarding').style.display = 'none';
+    document.getElementById('app-shell').style.display = s.shell ? 'flex' : 'none';
+
+    if (s.shell) {
+      document.getElementById(s.page).classList.add('visible');
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      if (s.nav) document.getElementById(s.nav).classList.add('active');
+    } else {
+      document.getElementById(s.page).style.display = 'block';
+      if (name === 'onboarding') obGoTo(1);
+    }
+
+    document.querySelectorAll('.screen-btn').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('onclick') === `showScreen('${name}')`);
+    });
+  }
+
+  /* ── ONBOARDING STEP NAV ── */
+  function obGoTo(step) {
+    for (let i = 1; i <= 5; i++) document.getElementById('ob-step-' + i).style.display = 'none';
+    document.getElementById('ob-welcome').style.display = 'none';
+    const el = document.getElementById('ob-step-' + step);
+    if (el) el.style.display = 'block';
+    // sync switcher label
+    document.querySelectorAll('.screen-btn').forEach(b => {
+      if (b.getAttribute('onclick') === "showScreen('onboarding')") b.classList.add('active');
+    });
+  }
+
+  function obComplete() {
+    for (let i = 1; i <= 5; i++) document.getElementById('ob-step-' + i).style.display = 'none';
+    document.getElementById('ob-welcome').style.display = 'block';
+  }
+
+  /* ── SIGN IN / SIGN UP TOGGLE (Step 1) ── */
+  function showSignIn() {
+    document.getElementById('signup-form').style.display = 'none';
+    document.getElementById('signin-form').style.display = 'block';
+    document.querySelector('#ob-step-1 .step-title').textContent = 'Welcome back.';
+    document.querySelector('#ob-step-1 .step-sub').textContent = 'Sign in to pick up where you left off.';
+    document.querySelector('#ob-step-1 .progress-fill').style.width = '0%';
+    document.querySelector('#ob-step-1 .step-label').textContent = 'Sign In';
+  }
+  function showSignUp() {
+    document.getElementById('signup-form').style.display = 'block';
+    document.getElementById('signin-form').style.display = 'none';
+    document.querySelector('#ob-step-1 .step-title').textContent = 'Create your account.';
+    document.querySelector('#ob-step-1 .step-sub').textContent = "You're joining something good. Let's get you set up — it takes about 2 minutes.";
+    document.querySelector('#ob-step-1 .progress-fill').style.width = '20%';
+    document.querySelector('#ob-step-1 .step-label').textContent = 'Step 1 of 5';
+  }
+
+  /* ── ROLE SELECTION (Step 2) ── */
+  function selectRole(el) {
+    el.closest('.role-grid').querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const role = el.dataset.role;
+    // hide all conditional fields first
+    document.getElementById('field-creative').style.display = 'none';
+    document.getElementById('field-biz').style.display = 'none';
+    document.getElementById('field-both').style.display = 'none';
+    // show relevant field(s)
+    if (role === 'creative') {
+      document.getElementById('field-creative').style.display = 'block';
+    } else if (role === 'biz') {
+      document.getElementById('field-biz').style.display = 'block';
+    } else if (role === 'both') {
+      document.getElementById('field-both').style.display = 'flex';
+    }
+    // hide the wrapper entirely for "exploring"
+    document.getElementById('role-fields').style.display = role === 'exploring' ? 'none' : 'block';
+  }
+
+  /* ── TAG SELECTION (Step 3, min 1 / max 5) ── */
+  function toggleTag(el) {
+    const selected = document.querySelectorAll('#ob-step-3 .tag-select.selected');
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+    } else if (selected.length < 5) {
+      el.classList.add('selected');
+    }
+    const count = document.querySelectorAll('#ob-step-3 .tag-select.selected').length;
+    document.getElementById('tag-counter').textContent = count;
+    // flash warning if trying to go past 5
+    if (!el.classList.contains('selected') && selected.length >= 5) {
+      el.style.borderColor = 'var(--orange)';
+      setTimeout(() => { el.style.borderColor = ''; }, 800);
+    }
+  }
+
+  /* ── STEP 3 CONTINUE — enforce min 1 ── */
+  function ob3Continue() {
+    const count = document.querySelectorAll('#ob-step-3 .tag-select.selected').length;
+    if (count === 0) {
+      document.getElementById('tag-min-warn').style.display = 'inline';
+      return;
+    }
+    document.getElementById('tag-min-warn').style.display = 'none';
+    obGoTo(4);
+  }
+
+  /* ── PLAN SELECTION (Step 5) ── */
+  function selectPlan(el) {
+    document.querySelectorAll('#ob-step-5 .plan-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const isFree = el.id === 'plan-free';
+    document.getElementById('payment-fields').style.display = isFree ? 'none' : 'block';
+  }
+
+  /* ── EVENT DETAIL + RSVP FLOW ── */
+  const eventData = {
+    'portfolio-reviews': {
+      title: 'Portfolio Reviews IRL', month: 'May', day: '23',
+      datetime: 'May 23 · 11AM–2PM CT', location: 'Chicago, IL',
+      host: 'Lexi Wulf', hostInitials: 'LW', hostColor: 'var(--orange)',
+      spots: '12 spots left', platform: 'Posh', badge: 'Creative Pour',
+      gradient: 'linear-gradient(135deg,#C94320,#8B2E10)',
+      desc: 'Bring a project you\'ve been sitting on — or one you just wrapped. We\'ll spend the afternoon giving and getting honest, useful portfolio feedback in a small group setting. Coffee\'s on us. Judgment is not.'
+    },
+    'happy-hour': {
+      title: 'Creative Biz Happy Hour', month: 'Jun', day: '07',
+      datetime: 'Jun 7 · 6–9PM CT', location: 'Chicago, IL',
+      host: 'Simone Adeyemi', hostInitials: 'SA', hostColor: 'var(--blue)',
+      spots: 'Open', platform: 'Pie', badge: 'Creative Pour',
+      gradient: 'linear-gradient(135deg,#9B9B24,#5E5E16)',
+      desc: 'A low-key evening for small business owners and creatives to meet, swap notes, and actually enjoy themselves for once. No pitching. No panels. Just people.'
+    },
+    'pricing-workshop': {
+      title: 'Pricing Workshop (Virtual)', month: 'Jun', day: '14',
+      datetime: 'Jun 14 · 2–4PM CT', location: 'Virtual — Zoom',
+      host: 'Lexi Wulf', hostInitials: 'LW', hostColor: 'var(--olive)',
+      spots: 'Open', platform: 'Zoom', badge: 'Virtual',
+      gradient: 'linear-gradient(135deg,#6B8DB5,#3d5f87)',
+      desc: 'Two hours on how to stop undercharging, how to present your rates without flinching, and how to build a pricing structure that actually scales with your business.'
+    },
+    'nyc-meetup': {
+      title: 'Draft Club Summer Meetup — NYC', month: 'Jun', day: '28',
+      datetime: 'Jun 28 · 5–8PM ET', location: 'New York, NY',
+      host: 'Maya Rodriguez', hostInitials: 'MR', hostColor: 'var(--orange)',
+      spots: '20 spots', platform: 'Posh', badge: 'Creative Pour',
+      gradient: 'linear-gradient(135deg,#2D1A12,#1a0e08)',
+      desc: 'Draft Club comes to New York. Come meet members in the city, talk shop, and grab a drink with people who actually get it.'
+    }
+  };
+
+  function showEventDetail(id) {
+    const e = eventData[id];
+    if (!e) return;
+    document.getElementById('event-detail-header').style.background = e.gradient;
+    document.getElementById('ev-month').textContent  = e.month;
+    document.getElementById('ev-day').textContent    = e.day;
+    document.getElementById('ev-title').textContent  = e.title;
+    document.getElementById('ev-datetime').textContent = e.datetime;
+    document.getElementById('ev-location').textContent = e.location;
+    document.getElementById('ev-host').textContent   = e.host;
+    document.getElementById('ev-host-av').textContent = e.hostInitials;
+    document.getElementById('ev-host-av').style.background = e.hostColor;
+    document.getElementById('ev-spots').textContent  = e.spots;
+    document.getElementById('ev-desc').textContent   = e.desc;
+    document.getElementById('ev-badge').textContent  = e.badge;
+    document.getElementById('ev-platform').textContent     = e.platform;
+    document.getElementById('ev-platform-btn').textContent = e.platform;
+    const overlay = document.getElementById('event-detail-overlay');
+    overlay.style.display = 'flex';
+  }
+
+  function hideEventDetail(e) {
+    if (e.target === document.getElementById('event-detail-overlay') || e.target.textContent === '✕') {
+      document.getElementById('event-detail-overlay').style.display = 'none';
+    }
+  }
+
+  function handleEventRsvp() {
+    document.getElementById('event-detail-overlay').style.display = 'none';
+    document.getElementById('rsvp-confirmed').style.display = 'flex';
+  }
+
+  function hideRsvpModal(e) {
+    if (!e || e.target === document.getElementById('rsvp-confirmed')) {
+      document.getElementById('rsvp-confirmed').style.display = 'none';
+    }
+  }
+
+  function hideRsvpConfirmed() {
+    document.getElementById('rsvp-confirmed').style.display = 'none';
+  }
+
+  /* ── PODCAST PLATFORM SELECTOR ── */
+  function selectPlatform(el) {
+    document.querySelectorAll('.platform-opt').forEach(o => {
+      o.style.background = 'transparent';
+      o.style.borderColor = 'rgba(255,255,255,0.08)';
+      o.querySelector('span:last-child')?.remove();
+      const label = o.querySelector('span:nth-child(2)');
+      if (label) label.style.color = 'rgba(240,234,224,0.65)';
+    });
+    el.style.background = 'rgba(201,67,32,0.25)';
+    el.style.borderColor = 'rgba(201,67,32,0.4)';
+    const label = el.querySelector('span:nth-child(2)');
+    if (label) label.style.color = 'var(--cream)';
+    const check = document.createElement('span');
+    check.textContent = '✓';
+    check.style.cssText = 'margin-left:auto;font-size:10px;color:var(--orange)';
+    el.appendChild(check);
+  }
+
+  /* ── RESOURCE TABS ── */
+  function switchResTab(tab) {
+    const isStack = tab === 'stack';
+    document.getElementById('res-stack').style.display  = isStack ? 'block' : 'none';
+    document.getElementById('res-binder').style.display = isStack ? 'none'  : 'block';
+    document.getElementById('res-tab-stack').classList.toggle('active',  isStack);
+    document.getElementById('res-tab-binder').classList.toggle('active', !isStack);
+  }
+
+  /* ── ROOM PIN TOGGLE ── */
+  const pinnedRooms = new Set(['photographers', 'money']);
+
+  function togglePin(e, roomId) {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    if (pinnedRooms.has(roomId)) {
+      pinnedRooms.delete(roomId);
+      btn.classList.remove('pinned');
+      btn.title = 'Pin';
+      btn.textContent = '·';
+      // remove from pinned list
+      const pinned = document.querySelector(`#pinned-rooms-list [data-room="${roomId}"]`);
+      if (pinned) pinned.remove();
+    } else {
+      pinnedRooms.add(roomId);
+      btn.classList.add('pinned');
+      btn.title = 'Unpin';
+      btn.textContent = '📌';
+      // find the room item in main list and clone to pinned
+      const source = document.querySelector(`.rooms-sidebar [data-room="${roomId}"]:not(#pinned-rooms-list [data-room])`);
+      if (source) {
+        const clone = source.cloneNode(true);
+        clone.querySelector('.room-item-count').textContent = 'Pinned';
+        clone.querySelector('.pin-btn').classList.add('pinned');
+        clone.querySelector('.pin-btn').textContent = '📌';
+        clone.querySelector('.pin-btn').title = 'Unpin';
+        clone.querySelector('.pin-btn').setAttribute('onclick', `togglePin(event,'${roomId}')`);
+        document.getElementById('pinned-rooms-list').appendChild(clone);
+      }
+    }
+    // hide pinned section if empty
+    const hasPins = document.querySelectorAll('#pinned-rooms-list .room-list-item').length > 0;
+    document.getElementById('pinned-rooms-section').style.display = hasPins ? 'block' : 'none';
+  }
+
+  // mark already-pinned items on load
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.rooms-sidebar [data-room]').forEach(el => {
+      const id = el.dataset.room;
+      const btn = el.querySelector('.pin-btn');
+      if (btn && pinnedRooms.has(id) && !el.closest('#pinned-rooms-list')) {
+        btn.classList.add('pinned');
+        btn.textContent = '📌';
+        btn.title = 'Unpin';
+      }
+    });
+  });
+
+  /* ── SUGGEST A ROOM ── */
+  function showSuggestRoom() {
+    document.getElementById('suggest-room-modal').style.display = 'flex';
+  }
+  function hideSuggestRoom(e) {
+    if (!e || e.target === document.getElementById('suggest-room-modal')) {
+      document.getElementById('suggest-room-modal').style.display = 'none';
+    }
+  }
+  function submitSuggestRoom() {
+    const modal = document.getElementById('suggest-room-modal');
+    modal.innerHTML = `
+      <div style="background:var(--white);border-radius:var(--radius-lg);padding:40px;max-width:400px;width:90%;text-align:center;box-shadow:0 24px 64px rgba(45,26,18,0.2)">
+        <div style="font-size:44px;margin-bottom:14px">🙌</div>
+        <div style="font-size:20px;font-weight:700;color:var(--espresso);margin-bottom:8px">Got it, thanks.</div>
+        <div style="font-size:14px;color:var(--espresso-60);line-height:1.65;margin-bottom:24px">Your suggestion is in. We review these regularly — if there's enough demand, you'll see a new room show up.</div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="document.getElementById('suggest-room-modal').style.display='none'">Back to Rooms</button>
+      </div>`;
+  }
+
+  /* ── PORTFOLIO ADD MODAL ── */
+  function showPortfolioAdd() {
+    document.getElementById('portfolio-add-modal').style.display = 'flex';
+  }
+  function hidePortfolioAdd(e) {
+    if (!e || e.target === document.getElementById('portfolio-add-modal')) {
+      document.getElementById('portfolio-add-modal').style.display = 'none';
+    }
+  }
+  function setPfType(type) {
+    const isLink = type === 'link';
+    document.getElementById('pf-type-link').style.borderColor = isLink ? 'var(--orange)' : 'var(--espresso-20)';
+    document.getElementById('pf-type-link').style.background  = isLink ? 'rgba(201,67,32,0.06)' : 'transparent';
+    document.getElementById('pf-type-file').style.borderColor = isLink ? 'var(--espresso-20)' : 'var(--orange)';
+    document.getElementById('pf-type-file').style.background  = isLink ? 'transparent' : 'rgba(201,67,32,0.06)';
+    document.getElementById('pf-link-field').style.display = isLink ? 'block' : 'none';
+    document.getElementById('pf-file-field').style.display = isLink ? 'none'  : 'block';
+  }
+
+  /* ── PORTFOLIO DETAIL MODAL ── */
+  const portfolioItems = {
+    'candle':    { emoji:'🕯',  grad:'linear-gradient(135deg,#C94320,#8B2E10)', badge:'Link',  badgeBg:'var(--orange)', title:'Brand Shoot — Lux Candle Co.',    desc:'Product photography for a Chicago-based candle brand. 40 images, studio + lifestyle.', cta:'View on Website ↗' },
+    'editorial': { emoji:'📰',  grad:'linear-gradient(135deg,#9B9B24,#5E5E16)', badge:'PDF',   badgeBg:'var(--olive)',  title:'Editorial — Chicago Magazine',       desc:'6-page editorial spread. Art directed and shot over two days in the West Loop.',     cta:'Download PDF ↓' },
+    'portrait':  { emoji:'🎞',  grad:'linear-gradient(135deg,#6B8DB5,#3d5f87)', badge:'Link',  badgeBg:'var(--blue)',   title:'Portrait Series 2025',               desc:'A 12-image portrait series documenting Chicago creatives in their workspaces.',       cta:'View on Behance ↗' },
+    'workshop':  { emoji:'📷',  grad:'linear-gradient(135deg,#2D1A12,#1a0e08)', badge:'Link',  badgeBg:'var(--espresso)', title:'Draft Club — Workshop Recap',      desc:'Event photography from the first Draft Club IRL workshop. March 2026.',              cta:'View Gallery ↗' },
+    'bloom':     { emoji:'🌸',  grad:'linear-gradient(135deg,#8B6B4A,#5e4530)', badge:'Link',  badgeBg:'var(--orange)', title:'Client Work — Bloom Studio',         desc:'Brand identity shoot for a wellness studio. Natural light, film-inspired grade.',    cta:'View Case Study ↗' },
+  };
+
+  function showPortfolioDetail(id) {
+    const p = portfolioItems[id];
+    if (!p) return;
+    document.getElementById('pf-detail-thumb').style.background = p.grad;
+    document.getElementById('pf-detail-emoji').textContent  = p.emoji;
+    document.getElementById('pf-detail-badge').textContent  = p.badge;
+    document.getElementById('pf-detail-badge').style.background = p.badgeBg;
+    document.getElementById('pf-detail-title').textContent  = p.title;
+    document.getElementById('pf-detail-desc').textContent   = p.desc;
+    document.getElementById('pf-detail-cta').textContent    = p.cta;
+    document.getElementById('portfolio-detail-modal').style.display = 'flex';
+  }
+  function hidePortfolioDetail(e) {
+    if (!e || e.target === document.getElementById('portfolio-detail-modal')) {
+      document.getElementById('portfolio-detail-modal').style.display = 'none';
+    }
+  }
+
+  /* ── PROFILE EDIT NAV ── */
+  function editGoTo(section) {
+    ['identity','role-tags','links','portfolio'].forEach(s => {
+      document.getElementById('edit-section-' + s).style.display = 'none';
+      document.getElementById('edit-nav-' + s).classList.remove('active');
+    });
+    document.getElementById('edit-section-' + section).style.display = 'block';
+    document.getElementById('edit-nav-' + section).classList.add('active');
+  }
+
+  /* ── ROLE SELECTION (Profile Edit) ── */
+  function editSelectRole(el) {
+    el.closest('#edit-role-grid').querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const role = el.dataset.role;
+    document.getElementById('edit-field-creative').style.display = 'none';
+    document.getElementById('edit-field-biz').style.display = 'none';
+    document.getElementById('edit-field-both').style.display = 'none';
+    if (role === 'creative') document.getElementById('edit-field-creative').style.display = 'block';
+    else if (role === 'biz')  document.getElementById('edit-field-biz').style.display = 'block';
+    else if (role === 'both') document.getElementById('edit-field-both').style.display = 'flex';
+    document.getElementById('edit-role-fields').style.display = role === 'exploring' ? 'none' : 'block';
+  }
+
+  /* ── TAG SELECTION (Profile Edit, max 5) ── */
+  function editToggleTag(el) {
+    const container = document.getElementById('edit-section-role-tags');
+    const selected = container.querySelectorAll('.tag-select.selected');
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+    } else if (selected.length < 5) {
+      el.classList.add('selected');
+    } else {
+      document.getElementById('edit-tag-warn').style.display = 'inline';
+      el.style.borderColor = 'var(--orange)';
+      setTimeout(() => { el.style.borderColor = ''; document.getElementById('edit-tag-warn').style.display = 'none'; }, 1000);
+      return;
+    }
+    document.getElementById('edit-tag-counter').textContent = container.querySelectorAll('.tag-select.selected').length;
+  }
+</script>
+</body>
+</html>
