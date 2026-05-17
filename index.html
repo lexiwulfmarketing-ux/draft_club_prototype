@@ -25,13 +25,24 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: #1a1a1a; color: var(--espresso); }
 
-  /* ── SCREEN SWITCHER ── */
-  .screen-nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    background: #111; padding: 10px 20px;
-    display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  /* ── DEV PANEL (prototype nav — hidden from testers) ── */
+  .dev-toggle {
+    position: fixed; bottom: 16px; right: 16px; z-index: 2000;
+    background: #111; color: #888; border: 1px solid #333;
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
+    padding: 5px 10px; border-radius: 20px; cursor: pointer;
+    transition: all 0.15s; letter-spacing: 0.03em;
   }
-  .screen-nav span { color: #666; font-size: 11px; font-family: 'DM Sans', sans-serif; margin-right: 4px; }
+  .dev-toggle:hover { background: #222; color: #ccc; }
+  .dev-panel {
+    position: fixed; bottom: 48px; right: 16px; z-index: 1999;
+    background: #111; border: 1px solid #333; border-radius: 12px;
+    padding: 12px 14px; display: none; flex-direction: column; gap: 6px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  .dev-panel.open { display: flex; }
+  .dev-panel-label { color: #555; font-size: 10px; font-family: 'DM Sans', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+  .dev-panel-row { display: flex; gap: 5px; flex-wrap: wrap; }
   .screen-btn {
     font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500;
     padding: 4px 10px; border-radius: 20px; border: 1px solid #333;
@@ -42,19 +53,18 @@
 
   /* ── APP SHELL ── */
   .app-wrapper {
-    margin-top: 50px; display: none;
-    background: var(--cream); min-height: calc(100vh - 50px);
+    display: none;
+    background: var(--cream); min-height: 100vh;
     max-width: 1280px; margin-left: auto; margin-right: auto;
-    margin-top: 50px;
   }
   .app-wrapper.visible { display: flex; }
 
   /* ── SIDEBAR NAV ── */
   .sidebar {
-    width: 220px; min-height: calc(100vh - 50px);
+    width: 220px; min-height: 100vh;
     background: var(--espresso); padding: 28px 0;
     display: flex; flex-direction: column;
-    flex-shrink: 0; position: sticky; top: 50px; height: calc(100vh - 50px);
+    flex-shrink: 0; position: sticky; top: 0; height: 100vh;
   }
   .sidebar-logo {
     padding: 0 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -125,8 +135,87 @@
 
   /* ── MAIN CONTENT ── */
   .main { flex: 1; overflow-y: auto; }
-  .page { display: none; padding: 36px 40px; min-height: calc(100vh - 50px); }
+  .page { display: none; padding: 36px 40px; min-height: 100vh; }
   .page.visible { display: block; }
+
+  /* ── BOTTOM NAV (mobile only) ── */
+  .bottom-nav {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 900;
+    background: var(--espresso); border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 0 env(safe-area-inset-bottom, 8px);
+    justify-content: space-around; align-items: center;
+  }
+  .bottom-nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 4px 12px; cursor: pointer; flex: 1;
+    color: rgba(240,234,224,0.5); font-size: 10px; font-weight: 500;
+    transition: color 0.15s;
+  }
+  .bottom-nav-item .bnav-icon { font-size: 20px; line-height: 1; }
+  .bottom-nav-item.active { color: var(--cream); }
+  .bottom-nav-item.active .bnav-icon { filter: drop-shadow(0 0 4px rgba(201,67,32,0.7)); }
+
+  /* ── MOBILE RESPONSIVE ── */
+  @media (max-width: 768px) {
+    body { background: var(--cream); }
+
+    .app-wrapper.visible { flex-direction: column; }
+
+    .sidebar { display: none; }
+    .bottom-nav { display: flex; }
+
+    .main { overflow-y: visible; }
+    .page { padding: 20px 16px 100px; min-height: 100vh; }
+    .page[id="page-profile-edit"] { padding: 0; }
+
+    .page-title { font-size: 22px; }
+
+    /* grids → single column */
+    .card-grid-2 { grid-template-columns: 1fr; }
+    .card-grid-3 { grid-template-columns: 1fr; }
+    .card-grid-4 { grid-template-columns: 1fr 1fr; }
+
+    /* forms */
+    .form-row { grid-template-columns: 1fr; }
+
+    /* rooms layout — stack sidebar above list */
+    .rooms-layout { grid-template-columns: 1fr; }
+    .rooms-sidebar { min-height: unset; height: auto; border-right: none; border-bottom: 1px solid var(--espresso-20); overflow-y: visible; }
+
+    /* profile edit — stack nav on top */
+    .edit-layout { grid-template-columns: 1fr; }
+    .edit-sidenav {
+      border-right: none; border-bottom: 1px solid var(--espresso-20);
+      padding: 12px 16px;
+    }
+    .edit-sidenav > div:first-child { display: none; }
+    .edit-sidenav { display: flex; flex-direction: row; gap: 4px; overflow-x: auto; padding-bottom: 12px; }
+    .edit-nav-item { white-space: nowrap; border-right: none !important; border-radius: var(--radius-pill); padding: 6px 14px; font-size: 12px; }
+    .edit-nav-item.active { border-right: none !important; background: var(--espresso); color: var(--cream); }
+    .edit-content { padding: 20px 16px 100px; }
+
+    /* profile hero */
+    .profile-cover { height: 100px; }
+    .profile-avatar { width: 64px; height: 64px; margin-top: -32px; }
+    .profile-info { padding: 8px 16px 20px; }
+    .profile-avatar-row { padding: 0 16px 12px; }
+
+    /* interact tabs */
+    .interact-tabs { gap: 0; }
+    .interact-tab { font-size: 13px; padding: 10px 14px; }
+
+    /* resource cards on mobile */
+    .resource-card { flex-direction: row; }
+    .resource-thumb { min-height: 90px; width: 90px; flex-shrink: 0; border-radius: var(--radius) 0 0 var(--radius); font-size: 28px; }
+    .resource-body { padding: 12px; }
+
+    /* events grid */
+    .event-card { min-width: unset; }
+
+    /* podcast */
+    .podcast-episode-row { flex-direction: column; gap: 10px; }
+  }
 
   /* ── ANNOTATION CHIP ── */
   .ann {
@@ -661,18 +750,23 @@
 </head>
 <body>
 
-<!-- SCREEN SWITCHER -->
-<div class="screen-nav">
-  <span>Screen:</span>
-  <button class="screen-btn active" onclick="showScreen('home')">Home</button>
-  <button class="screen-btn" onclick="showScreen('rooms')">Rooms</button>
-  <button class="screen-btn" onclick="showScreen('profile-view')">Profile View</button>
-  <button class="screen-btn" onclick="showScreen('profile-edit')">Profile Edit</button>
-  <button class="screen-btn" onclick="showScreen('resources')">Resources</button>
-  <button class="screen-btn" onclick="showScreen('interact-events')">Events</button>
-  <button class="screen-btn" onclick="showScreen('interact-podcast')">Podcast</button>
-  <button class="screen-btn" onclick="showScreen('onboarding')">Onboarding</button>
+<!-- DEV PANEL (prototype nav — not visible to testers) -->
+<div class="dev-panel" id="dev-panel">
+  <div class="dev-panel-label">Jump to screen</div>
+  <div class="dev-panel-row">
+    <button class="screen-btn active" onclick="showScreen('home')">Home</button>
+    <button class="screen-btn" onclick="showScreen('rooms')">Rooms</button>
+    <button class="screen-btn" onclick="showScreen('profile-view')">Profile</button>
+    <button class="screen-btn" onclick="showScreen('profile-edit')">Edit Profile</button>
+  </div>
+  <div class="dev-panel-row">
+    <button class="screen-btn" onclick="showScreen('resources')">Resources</button>
+    <button class="screen-btn" onclick="showScreen('interact-events')">Events</button>
+    <button class="screen-btn" onclick="showScreen('interact-podcast')">Podcast</button>
+    <button class="screen-btn" onclick="showScreen('onboarding')">Onboarding</button>
+  </div>
 </div>
+<button class="dev-toggle" onclick="toggleDevPanel()">⚙ Dev</button>
 
 <!-- ══════════════════════════════════════════ -->
 <!--  MAIN APP SHELL (all screens except onboarding) -->
@@ -724,6 +818,26 @@
       </div>
     </div>
   </nav>
+
+  <!-- BOTTOM NAV (mobile only) -->
+  <nav class="bottom-nav" id="bottom-nav">
+    <div class="bottom-nav-item active" id="bnav-home" onclick="showScreen('home')">
+      <span class="bnav-icon">⌂</span><span>Home</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-rooms" onclick="showScreen('rooms')">
+      <span class="bnav-icon">💬</span><span>Rooms</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-resources" onclick="showScreen('resources')">
+      <span class="bnav-icon">◈</span><span>Resources</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-interact" onclick="showScreen('interact-events')">
+      <span class="bnav-icon">✦</span><span>Interact</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-profile" onclick="showScreen('profile-view')">
+      <span class="bnav-icon">◎</span><span>Profile</span>
+    </div>
+  </nav>
+
 
   <!-- MAIN AREA -->
   <div class="main">
@@ -2675,9 +2789,23 @@
     'onboarding':       { shell: false, page: 'page-onboarding',       nav: null },
   };
 
+  /* maps each screen name to its bottom nav item id */
+  const bnavMap = {
+    'home': 'bnav-home',
+    'rooms': 'bnav-rooms',
+    'profile-view': 'bnav-profile',
+    'profile-edit': 'bnav-profile',
+    'resources': 'bnav-resources',
+    'interact-events': 'bnav-interact',
+    'interact-podcast': 'bnav-interact',
+  };
+
   function showScreen(name) {
     const s = screens[name];
     if (!s) return;
+
+    // close dev panel on navigation
+    document.getElementById('dev-panel').classList.remove('open');
 
     document.querySelectorAll('.page').forEach(p => p.classList.remove('visible'));
     document.getElementById('page-onboarding').style.display = 'none';
@@ -2692,10 +2820,29 @@
       if (name === 'onboarding') obGoTo(1);
     }
 
+    // sync dev panel buttons
     document.querySelectorAll('.screen-btn').forEach(b => {
       b.classList.toggle('active', b.getAttribute('onclick') === `showScreen('${name}')`);
     });
+
+    // sync bottom nav
+    document.querySelectorAll('.bottom-nav-item').forEach(n => n.classList.remove('active'));
+    const bnavId = bnavMap[name];
+    if (bnavId) document.getElementById(bnavId).classList.add('active');
   }
+
+  /* ── DEV PANEL TOGGLE ── */
+  function toggleDevPanel() {
+    document.getElementById('dev-panel').classList.toggle('open');
+  }
+  // close dev panel when clicking outside
+  document.addEventListener('click', function(e) {
+    const panel = document.getElementById('dev-panel');
+    const toggle = document.querySelector('.dev-toggle');
+    if (!panel.contains(e.target) && !toggle.contains(e.target)) {
+      panel.classList.remove('open');
+    }
+  });
 
   /* ── ONBOARDING STEP NAV ── */
   function obGoTo(step) {
