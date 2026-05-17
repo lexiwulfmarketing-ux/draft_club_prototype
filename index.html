@@ -156,87 +156,7 @@
   .bottom-nav-item.active { color: var(--cream); }
   .bottom-nav-item.active .bnav-icon { filter: drop-shadow(0 0 4px rgba(201,67,32,0.7)); }
 
-  /* ── MOBILE RESPONSIVE ── */
-  @media (max-width: 768px) {
-    body { background: var(--cream); }
-
-    .app-wrapper.visible { flex-direction: column; }
-
-    .sidebar { display: none; }
-    .bottom-nav { display: flex; }
-
-    .main { overflow-y: visible; }
-    .page { padding: 20px 16px 100px; min-height: 100vh; }
-    .page[id="page-profile-edit"] { padding: 0; }
-
-    .page-title { font-size: 22px; }
-
-    /* grids → single column */
-    .card-grid-2 { grid-template-columns: 1fr; }
-    .card-grid-3 { grid-template-columns: 1fr; }
-    .card-grid-4 { grid-template-columns: 1fr 1fr; }
-
-    /* forms */
-    .form-row { grid-template-columns: 1fr; }
-
-    /* rooms layout — stack sidebar above list */
-    .rooms-layout { grid-template-columns: 1fr; }
-    .rooms-sidebar { min-height: unset; height: auto; border-right: none; border-bottom: 1px solid var(--espresso-20); overflow-y: visible; }
-
-    /* profile edit — stack nav on top */
-    .edit-layout { grid-template-columns: 1fr; }
-    .edit-sidenav {
-      border-right: none; border-bottom: 1px solid var(--espresso-20);
-      padding: 12px 16px;
-    }
-    .edit-sidenav > div:first-child { display: none; }
-    .edit-sidenav { display: flex; flex-direction: row; gap: 4px; overflow-x: auto; padding-bottom: 12px; }
-    .edit-nav-item { white-space: nowrap; border-right: none !important; border-radius: var(--radius-pill); padding: 6px 14px; font-size: 12px; }
-    .edit-nav-item.active { border-right: none !important; background: var(--espresso); color: var(--cream); }
-    .edit-content { padding: 20px 16px 100px; }
-
-    /* profile hero */
-    .profile-cover { height: 100px; }
-    .profile-avatar { width: 64px; height: 64px; margin-top: -32px; }
-    .profile-info { padding: 8px 16px 20px; }
-    .profile-avatar-row { padding: 0 16px 12px; }
-
-    /* profile layout — reorder cards */
-    .profile-layout { display: flex; flex-direction: column; gap: 16px; }
-    #profile-portfolio   { order: 1; }
-    #profile-pinned      { order: 2; }
-    #profile-library     { order: 3; }
-    #profile-member-since { order: 4; }
-
-    /* interact tabs */
-    .interact-tabs { gap: 0; }
-    .interact-tab { font-size: 13px; padding: 10px 14px; }
-
-    /* events — filter bar scrolls, no wrap */
-    .events-filter-bar { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
-    .events-filter-bar::-webkit-scrollbar { display: none; }
-    .events-grid { grid-template-columns: 1fr; }
-    .event-card-meta { flex-direction: column; gap: 3px; }
-    .event-card-host-row { display: flex; align-items: center; justify-content: center; gap: 10px; }
-
-    /* home grid — reorder for mobile */
-    .home-grid { display: flex; flex-direction: column; gap: 16px; }
-    .home-cell-featured  { order: 1; }
-    .home-cell-events    { order: 2; }
-    .home-cell-podcast   { order: 3; }
-    .home-cell-activity  { order: 4; }
-    .home-cell-plan      { order: 5; }
-
-    /* resources — 2 columns on mobile, vertical card layout */
-    #page-resources .card-grid-3 { grid-template-columns: 1fr 1fr; gap: 10px; }
-    .resource-card { flex-direction: column; }
-    .resource-thumb { width: 100%; min-height: 100px; border-radius: var(--radius) var(--radius) 0 0; font-size: 28px; }
-    .resource-body { padding: 10px 12px 12px; }
-    .resource-title { font-size: 13px; }
-
-    /* podcast */
-    .podcast-episode-row { flex-direction: column; gap: 10px; }
-  }
+  /* placeholder — full mobile query is at end of stylesheet */
 
   /* ── ANNOTATION CHIP ── */
   .ann {
@@ -580,6 +500,7 @@
     background: var(--white); border-radius: var(--radius);
     border: 1px solid var(--espresso-20); overflow: hidden; cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
+    display: flex; flex-direction: column;
   }
   .resource-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,26,18,0.1); }
   .resource-thumb {
@@ -594,10 +515,10 @@
   .badge-workshop { background: var(--orange); }
   .badge-download { background: var(--olive); }
   .badge-guide { background: var(--blue); }
-  .resource-body { padding: 14px 16px; }
+  .resource-body { padding: 14px 16px; display: flex; flex-direction: column; flex: 1; }
   .resource-title { font-size: 14px; font-weight: 700; color: var(--espresso); margin-bottom: 4px; }
   .resource-desc { font-size: 12px; color: var(--espresso-60); margin-bottom: 12px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .resource-footer { display: flex; align-items: center; justify-content: space-between; }
+  .resource-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
   .resource-price { font-size: 15px; font-weight: 700; color: var(--espresso); }
   .resource-price.free { color: var(--olive); }
   .resource-price.included { color: var(--blue); font-size: 12px; font-weight: 600; }
@@ -770,6 +691,120 @@
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--espresso-20); border-radius: 3px; }
+
+  /* ══════════════════════════════════════════
+     MOBILE RESPONSIVE  (must be last so it
+     wins the cascade over desktop rules)
+     ══════════════════════════════════════════ */
+  @media (max-width: 768px) {
+
+    body { background: var(--cream); overflow-x: hidden; }
+    * { max-width: 100%; box-sizing: border-box; }
+
+    /* ── shell ── */
+    .app-wrapper.visible { flex-direction: column; max-width: 100vw; }
+    .sidebar { display: none; }
+    .bottom-nav { display: flex; }
+    .main { overflow-x: hidden; }
+
+    /* ── pages ── */
+    .page { padding: 16px 14px 100px; min-height: 100vh; }
+    .page[id="page-profile-edit"] { padding: 0; }
+    .page[id="page-rooms"] { padding: 0; }
+    .page-title { font-size: 20px; }
+    .page-sub  { font-size: 13px; }
+
+    /* ── cards ── */
+    .card { padding: 14px; }
+
+    /* ── grids → single column ── */
+    .card-grid-2 { grid-template-columns: 1fr; }
+    .card-grid-3 { grid-template-columns: 1fr; }
+    .card-grid-4 { grid-template-columns: 1fr 1fr; }
+    .form-row    { grid-template-columns: 1fr; }
+
+    /* ── home: flat flex column, reordered ── */
+    .home-grid { display: flex; flex-direction: column; gap: 14px; }
+    .home-cell-featured  { order: 1; }
+    .home-cell-events    { order: 2; }
+    .home-cell-podcast   { order: 3; }
+    .home-cell-activity  { order: 4; }
+    .home-cell-plan      { order: 5; }
+    .home-welcome { margin-bottom: 14px; }
+
+    /* ── rooms: chat-first, sidebar as overlay ── */
+    .rooms-layout { display: block; position: relative; }
+    .rooms-sidebar {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      background: var(--cream); overflow-y: auto;
+      padding-bottom: 80px;
+    }
+    .rooms-sidebar.mobile-open { display: block; }
+    .room-view { height: calc(100vh - 65px); }
+    .room-messages { padding-bottom: 80px; }
+    .room-input-bar {
+      position: fixed; bottom: 65px; left: 0; right: 0; z-index: 200;
+      background: var(--white); border-top: 1px solid var(--espresso-20);
+      padding: 8px 12px;
+    }
+    .room-header { position: sticky; top: 0; z-index: 100; }
+
+    /* ── profile edit ── */
+    .edit-layout { grid-template-columns: 1fr; }
+    .edit-sidenav {
+      display: flex; flex-direction: row; gap: 4px;
+      overflow-x: auto; padding: 10px 14px 10px;
+      border-right: none; border-bottom: 1px solid var(--espresso-20);
+    }
+    .edit-sidenav > div:first-child { display: none; }
+    .edit-nav-item {
+      white-space: nowrap; border-right: none !important;
+      border-radius: var(--radius-pill); padding: 6px 12px; font-size: 12px;
+    }
+    .edit-nav-item.active { background: var(--espresso); color: var(--cream); border-right: none !important; }
+    .edit-content { padding: 16px 14px 100px; }
+
+    /* ── profile view ── */
+    .profile-cover { height: 90px; }
+    .profile-avatar { width: 60px; height: 60px; margin-top: -30px; }
+    .profile-avatar-row { padding: 0 14px 10px; }
+    .profile-info { padding: 6px 14px 18px; }
+    .profile-layout { display: flex; flex-direction: column; gap: 14px; }
+    #profile-portfolio   { order: 1; }
+    #profile-pinned      { order: 2; }
+    #profile-library     { order: 3; }
+    #profile-member-since { order: 4; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* ── resources: 2-col, vertical cards ── */
+    #page-resources .card-grid-3 { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .resource-card { flex-direction: column; }
+    .resource-thumb { width: 100%; min-height: 90px; border-radius: var(--radius) var(--radius) 0 0; font-size: 26px; }
+    .resource-body { padding: 10px 10px 12px; }
+    .resource-title { font-size: 12px; }
+
+    /* ── events ── */
+    .events-filter-bar { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
+    .events-filter-bar::-webkit-scrollbar { display: none; }
+    .events-grid { grid-template-columns: 1fr; }
+    .event-card-meta { flex-direction: column; gap: 3px; }
+
+    /* ── interact tabs ── */
+    .interact-tabs { gap: 0; }
+    .interact-tab { font-size: 13px; padding: 10px 14px; }
+
+    /* ── podcast ── */
+    .podcast-header { flex-direction: column; gap: 14px; padding: 16px; }
+    .podcast-cover { width: 60px; height: 60px; font-size: 24px; }
+    .podcast-listen-links { flex-wrap: wrap; gap: 6px; }
+    .listen-btn { font-size: 11px; padding: 5px 10px; }
+    .episode-item { flex-wrap: wrap; gap: 6px; }
+
+    /* ── filter chips one-line scroll ── */
+    .filter-bar { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .filter-bar::-webkit-scrollbar { display: none; }
+    .filter-chip { white-space: nowrap; flex-shrink: 0; }
+  }
 </style>
 </head>
 <body>
@@ -981,9 +1016,12 @@
       <div class="rooms-layout">
 
         <!-- Room Sidebar -->
-        <div class="rooms-sidebar" style="overflow-y:auto">
+        <div class="rooms-sidebar" id="rooms-sidebar" style="overflow-y:auto">
           <div style="padding:0 12px 14px;border-bottom:1px solid var(--espresso-20);margin-bottom:10px">
-            <div style="font-size:16px;font-weight:700;margin-bottom:12px;padding-top:4px">Rooms</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-top:4px">
+              <div style="font-size:16px;font-weight:700">Rooms</div>
+              <button onclick="closeRoomsSidebar()" style="display:none;background:none;border:none;font-size:20px;cursor:pointer;color:var(--espresso-60);padding:0;line-height:1" id="rooms-sidebar-close">✕</button>
+            </div>
             <div style="display:flex;align-items:center;gap:8px;background:var(--cream);border:1.5px solid var(--espresso-20);border-radius:var(--radius-pill);padding:7px 12px">
               <span style="color:var(--espresso-60);font-size:13px">🔍</span>
               <input style="background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;color:var(--espresso)" placeholder="Search rooms…">
@@ -1237,8 +1275,9 @@
         <!-- Room Chat View -->
         <div class="room-view">
           <div class="room-header">
+            <button onclick="openRoomsSidebar()" style="display:none;background:none;border:none;font-size:18px;cursor:pointer;padding:0;margin-right:6px;color:var(--espresso-60);flex-shrink:0" id="rooms-menu-btn">☰</button>
             <div class="room-header-icon">📷</div>
-            <div>
+            <div style="flex:1;min-width:0">
               <div class="room-header-name">Photographers' Corner</div>
               <div class="room-header-meta">For photographers building a creative business</div>
             </div>
@@ -2152,10 +2191,7 @@
               <div>⏱ 11AM–2PM CT</div>
               <div>🎟 12 spots left</div>
             </div>
-            <div class="event-card-host-row" style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px">
-              <div class="event-card-host"><div class="event-host-avatar">LW</div><div class="event-host-name">Lexi Wulf</div></div>
-              <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center">View Details →</button>
-            </div>
+            <div style="margin-top:12px"><button class="btn btn-primary btn-sm" style="width:100%;justify-content:center">View Details →</button></div>
           </div>
         </div>
 
@@ -2312,38 +2348,16 @@
       <!-- Show header -->
       <div class="podcast-header">
         <div class="podcast-cover">🎙</div>
-        <div style="flex:1">
-          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(240,234,224,0.5);margin-bottom:4px">Now Playing</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(240,234,224,0.5);margin-bottom:4px">Podcast</div>
           <div class="podcast-show-name">Draft Club Podcast</div>
           <div class="podcast-show-desc">Honest conversations about building a creative business — the real process, not the highlight reel. New episodes every other Tuesday.</div>
-          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-            <div class="podcast-listen-links">
-              <div class="listen-btn">🎵 Spotify</div>
-              <div class="listen-btn">🎧 Apple Podcasts</div>
-              <div class="listen-btn">▶ YouTube</div>
-              <div class="listen-btn">✉ Substack</div>
-            </div>
+          <div class="podcast-listen-links" style="flex-wrap:wrap">
+            <div class="listen-btn">🎵 Spotify</div>
+            <div class="listen-btn">🎧 Apple Podcasts</div>
+            <div class="listen-btn">▶ YouTube</div>
+            <div class="listen-btn">✉ Substack</div>
           </div>
-        </div>
-        <!-- Preferred platform picker -->
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:14px;min-width:170px;flex-shrink:0">
-          <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(240,234,224,0.45);margin-bottom:10px">Your platform</div>
-          <div id="platform-list" style="display:flex;flex-direction:column;gap:6px">
-            <div class="platform-opt selected" onclick="selectPlatform(this)" data-platform="spotify"  style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-sm);background:rgba(201,67,32,0.25);border:1px solid rgba(201,67,32,0.4);cursor:pointer">
-              <span style="font-size:14px">🎵</span><span style="font-size:12px;font-weight:600;color:var(--cream)">Spotify</span>
-              <span style="margin-left:auto;font-size:10px;color:var(--orange)">✓</span>
-            </div>
-            <div class="platform-opt" onclick="selectPlatform(this)" data-platform="apple" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-sm);background:transparent;border:1px solid rgba(255,255,255,0.08);cursor:pointer">
-              <span style="font-size:14px">🎧</span><span style="font-size:12px;font-weight:500;color:rgba(240,234,224,0.65)">Apple Podcasts</span>
-            </div>
-            <div class="platform-opt" onclick="selectPlatform(this)" data-platform="youtube" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-sm);background:transparent;border:1px solid rgba(255,255,255,0.08);cursor:pointer">
-              <span style="font-size:14px">▶</span><span style="font-size:12px;font-weight:500;color:rgba(240,234,224,0.65)">YouTube</span>
-            </div>
-            <div class="platform-opt" onclick="selectPlatform(this)" data-platform="substack" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-sm);background:transparent;border:1px solid rgba(255,255,255,0.08);cursor:pointer">
-              <span style="font-size:14px">✉</span><span style="font-size:12px;font-weight:500;color:rgba(240,234,224,0.65)">Substack</span>
-            </div>
-          </div>
-          <div style="font-size:10px;color:rgba(240,234,224,0.3);margin-top:8px;line-height:1.4">Episode links will open in your preferred app</div>
         </div>
       </div>
 
@@ -2849,6 +2863,27 @@
   }
 
   /* ── DEV PANEL TOGGLE ── */
+  /* ── ROOMS MOBILE SIDEBAR TOGGLE ── */
+  function openRoomsSidebar() {
+    const sb = document.getElementById('rooms-sidebar');
+    const closeBtn = document.getElementById('rooms-sidebar-close');
+    sb.classList.add('mobile-open');
+    if (closeBtn) closeBtn.style.display = 'block';
+  }
+  function closeRoomsSidebar() {
+    const sb = document.getElementById('rooms-sidebar');
+    const closeBtn = document.getElementById('rooms-sidebar-close');
+    sb.classList.remove('mobile-open');
+    if (closeBtn) closeBtn.style.display = 'none';
+  }
+  // show/hide the hamburger button based on viewport
+  function syncRoomsMenuBtn() {
+    const btn = document.getElementById('rooms-menu-btn');
+    if (btn) btn.style.display = window.innerWidth <= 768 ? 'block' : 'none';
+  }
+  window.addEventListener('resize', syncRoomsMenuBtn);
+  window.addEventListener('load', syncRoomsMenuBtn);
+
   function toggleDevPanel() {
     document.getElementById('dev-panel').classList.toggle('open');
   }
